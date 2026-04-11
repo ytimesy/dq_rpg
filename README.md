@@ -1,24 +1,27 @@
-# README
+# DQ RPG
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails 7 + esbuild + Tailwind で作った、ドラゴンクエストI風のシングルページRPGです。
 
-Things you may want to cover:
+## 起動
 
-* Ruby version
+```bash
+bin/setup
+bin/dev
+```
 
-* System dependencies
+ブラウザで `http://localhost:3000` を開くと、そのままゲームを遊べます。
 
-* Configuration
+## 遊び方
 
-* Database creation
+- 方向キーまたは `WASD` で移動
+- 平原や森ではランダムエンカウント
+- 城では無料回復
+- 町では宿屋、武器、防具、やくそうの購入
+- 洞窟でゴーレムを倒すと太陽の紋章を入手
+- 紋章を持って竜王の城へ行き、りゅうおうを倒すとクリア
 
-* Database initialization
+## テスト
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+bin/rails test
+```

@@ -1,0 +1,95 @@
+<% content_for :title, "DQ RPG" %>
+
+<div class="quest-shell">
+  <header class="quest-hero">
+    <p class="quest-kicker">SINGLE SCREEN JRPG</p>
+    <h1>ドラゴンクエストI風ミニRPG</h1>
+    <p class="quest-lead">
+      町で装備を整え、洞窟の守り手を倒し、竜王を討ってアレフガルドに平和を取り戻してください。
+    </p>
+  </header>
+
+  <main class="quest-grid" data-dragon-quest-game>
+    <section class="quest-panel world-panel" aria-labelledby="world-panel-title">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-label">WORLD</p>
+          <h2 id="world-panel-title">アレフガルド</h2>
+        </div>
+        <div class="mode-chip" id="dq-mode"></div>
+      </div>
+      <div class="location-line" id="dq-location"></div>
+      <div class="world-map" id="dq-map" aria-live="polite"></div>
+      <p class="panel-footnote">移動: 方向キー / WASD</p>
+    </section>
+
+    <section class="quest-panel stats-panel" aria-labelledby="stats-panel-title">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-label">STATUS</p>
+          <h2 id="stats-panel-title">冒険者</h2>
+        </div>
+        <div class="save-chip">自動保存</div>
+      </div>
+      <div id="dq-stats"></div>
+      <div class="objective-block">
+        <p class="panel-label">OBJECTIVE</p>
+        <div id="dq-objectives"></div>
+      </div>
+    </section>
+
+    <section class="quest-panel controls-panel" aria-labelledby="controls-panel-title">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-label">COMMAND</p>
+          <h2 id="controls-panel-title">コマンド</h2>
+        </div>
+      </div>
+
+      <div class="move-pad" aria-label="移動コマンド">
+        <div></div>
+        <button class="command-button" data-command="move" data-direction="up" type="button">↑</button>
+        <div></div>
+        <button class="command-button" data-command="move" data-direction="left" type="button">←</button>
+        <button class="command-button action-button" data-command="action" type="button" id="dq-action-button">しらべる</button>
+        <button class="command-button" data-command="move" data-direction="right" type="button">→</button>
+        <div></div>
+        <button class="command-button" data-command="move" data-direction="down" type="button">↓</button>
+        <div></div>
+      </div>
+
+      <div class="battle-actions">
+        <button class="command-button" data-command="attack" type="button">たたかう</button>
+        <button class="command-button" data-command="spell" type="button">ホイミ</button>
+        <button class="command-button" data-command="herb" type="button">やくそう</button>
+        <button class="command-button" data-command="run" type="button">にげる</button>
+      </div>
+
+      <div class="reset-row">
+        <button class="command-button reset-button" data-command="reset" type="button">新しい冒険を始める</button>
+      </div>
+
+      <div class="context-panel" id="dq-context"></div>
+    </section>
+
+    <section class="quest-panel battle-panel" aria-labelledby="battle-panel-title">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-label">ENCOUNTER</p>
+          <h2 id="battle-panel-title">戦況</h2>
+        </div>
+      </div>
+      <div id="dq-enemy"></div>
+    </section>
+
+    <section class="quest-panel log-panel" aria-labelledby="log-panel-title">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-label">BATTLE LOG</p>
+          <h2 id="log-panel-title">冒険の記録</h2>
+        </div>
+      </div>
+      <ol id="dq-log" class="log-list"></ol>
+    </section>
+  </main>
+</div>

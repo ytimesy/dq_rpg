@@ -1,1 +1,356 @@
 @import "tailwindcss";
+
+:root {
+  --bg-night: #11111a;
+  --bg-panel: rgba(12, 20, 38, 0.82);
+  --bg-panel-strong: rgba(7, 12, 24, 0.92);
+  --line-bright: rgba(135, 175, 255, 0.35);
+  --text-main: #ecf4ff;
+  --text-dim: #a7bdd8;
+  --accent-gold: #f7c96f;
+  --accent-red: #ff857a;
+  --accent-green: #97e7a7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at top left, rgba(59, 103, 196, 0.28), transparent 32%),
+    radial-gradient(circle at top right, rgba(255, 173, 94, 0.16), transparent 24%),
+    linear-gradient(180deg, #1a2034 0%, #0f1220 48%, #0a0d18 100%);
+  font-family: "Courier New", "Hiragino Mincho ProN", "Yu Mincho", monospace;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.quest-shell {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.quest-hero {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(245, 204, 115, 0.22);
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(247, 201, 111, 0.1), rgba(92, 132, 220, 0.08)),
+    rgba(8, 13, 27, 0.78);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+.quest-kicker,
+.panel-label,
+.save-chip,
+.mode-chip {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.quest-hero h1 {
+  margin: 0.35rem 0 0.6rem;
+  font-size: clamp(2.3rem, 4vw, 4rem);
+  line-height: 1.02;
+}
+
+.quest-lead {
+  margin: 0;
+  max-width: 48rem;
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.quest-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.8fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.quest-panel {
+  border: 1px solid var(--line-bright);
+  border-radius: 24px;
+  background: linear-gradient(180deg, var(--bg-panel), var(--bg-panel-strong));
+  backdrop-filter: blur(12px);
+  padding: 1.2rem;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22);
+  animation: panel-rise 420ms ease both;
+}
+
+.world-panel,
+.log-panel {
+  grid-column: 1;
+}
+
+.stats-panel,
+.controls-panel,
+.battle-panel {
+  grid-column: 2;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.panel-heading h2 {
+  margin: 0.15rem 0 0;
+  font-size: 1.2rem;
+}
+
+.panel-label,
+.save-chip,
+.location-line,
+.panel-footnote,
+.context-copy,
+.enemy-description,
+.equipment-block,
+.objective-block p {
+  color: var(--text-dim);
+}
+
+.mode-chip,
+.save-chip {
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.location-line {
+  margin-bottom: 0.85rem;
+  min-height: 1.25rem;
+}
+
+.world-map {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 0.36rem;
+}
+
+.map-tile {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.map-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.terrain-plain { background: linear-gradient(180deg, #49613c, #334728); }
+.terrain-forest { background: linear-gradient(180deg, #325640, #193127); }
+.terrain-swamp { background: linear-gradient(180deg, #52604f, #374339); }
+.terrain-castle { background: linear-gradient(180deg, #506eb7, #33498b); }
+.terrain-town { background: linear-gradient(180deg, #8a5f3c, #5b3b22); }
+.terrain-cave { background: linear-gradient(180deg, #5e5a7a, #343147); }
+.terrain-dragon { background: linear-gradient(180deg, #9b4540, #5d221f); }
+.terrain-mountain { background: linear-gradient(180deg, #536071, #2f3947); opacity: 0.78; }
+
+.map-tile.is-player {
+  color: #0f1421;
+  background: linear-gradient(180deg, #f7d47b, #d8a949);
+  border-color: rgba(255, 232, 176, 0.7);
+  box-shadow: 0 0 0 2px rgba(255, 215, 120, 0.12);
+}
+
+.panel-footnote {
+  margin: 0.8rem 0 0;
+  font-size: 0.84rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0;
+}
+
+.stats-grid div {
+  padding: 0.75rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stats-grid dt {
+  margin-bottom: 0.3rem;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+.stats-grid dd {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.equipment-block,
+.objective-block {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.objective-done {
+  color: var(--accent-green);
+}
+
+.move-pad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.battle-actions,
+.reset-row,
+.shop-buttons {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.battle-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0.9rem;
+}
+
+.reset-row {
+  margin-top: 0.9rem;
+}
+
+.command-button,
+.shop-button {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 0.85rem 0.9rem;
+  color: var(--text-main);
+  background:
+    linear-gradient(180deg, rgba(91, 123, 204, 0.16), rgba(255, 255, 255, 0.03)),
+    rgba(6, 10, 18, 0.8);
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.command-button:hover:not(:disabled),
+.shop-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(247, 201, 111, 0.5);
+}
+
+.command-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.action-button {
+  font-size: 0.88rem;
+}
+
+.reset-button {
+  background: linear-gradient(180deg, rgba(164, 76, 68, 0.28), rgba(255, 255, 255, 0.02));
+}
+
+.context-panel {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+}
+
+.enemy-card {
+  min-height: 11rem;
+  border-radius: 20px;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 40%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.enemy-name {
+  margin: 0 0 0.8rem;
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+}
+
+.boss-card {
+  box-shadow: inset 0 0 0 1px rgba(255, 133, 122, 0.28);
+}
+
+.victory-card .enemy-name {
+  color: var(--accent-green);
+}
+
+.log-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.log-list li::marker {
+  color: var(--accent-gold);
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 960px) {
+  .quest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .world-panel,
+  .log-panel,
+  .stats-panel,
+  .controls-panel,
+  .battle-panel {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .quest-shell {
+    width: min(100% - 1rem, 100%);
+    padding-top: 1rem;
+  }
+
+  .quest-hero,
+  .quest-panel {
+    border-radius: 20px;
+    padding: 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
