@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Chimera</title>
+  <g stroke="#ffe3a8" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M70 130c0-34 18-56 40-56s40 22 40 56c0 26-16 42-40 42s-40-16-40-42Z" fill="#d16a25"/>
+    <path d="m84 92-40-26-10 36 34 6" fill="#a84a18"/>
+    <path d="m136 92 40-26 10 36-34 6" fill="#a84a18"/>
+    <path d="M110 74c8-24 24-38 48-38-12 10-17 22-18 36" fill="#6ab84b"/>
+  </g>
+  <circle cx="94" cy="114" r="7" fill="#251409"/>
+  <circle cx="126" cy="114" r="7" fill="#251409"/>
+  <path d="M96 140c7 5 21 5 28 0" fill="none" stroke="#251409" stroke-linecap="round" stroke-width="6"/>
+</svg>

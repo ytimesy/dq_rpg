@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Scorpion</title>
+  <g fill="#c36b1c" stroke="#ffe1a8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="110" cy="120" rx="34" ry="26"/>
+    <circle cx="78" cy="112" r="14"/>
+    <circle cx="142" cy="112" r="14"/>
+    <path d="M84 142 58 166"/>
+    <path d="M98 148 82 178"/>
+    <path d="M122 148 138 178"/>
+    <path d="M136 142 162 166"/>
+    <path d="M72 104 40 90 26 112 58 118"/>
+    <path d="M148 104 180 90 194 112 162 118"/>
+    <path d="M110 90c8-24 28-34 48-24-20 8-29 21-29 38"/>
+  </g>
+  <circle cx="94" cy="118" r="5" fill="#2c1407"/>
+  <circle cx="126" cy="118" r="5" fill="#2c1407"/>
+</svg>

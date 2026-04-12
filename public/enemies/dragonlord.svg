@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Dragonlord</title>
+  <defs>
+    <linearGradient id="skin" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#b54444"/>
+      <stop offset="100%" stop-color="#4d1020"/>
+    </linearGradient>
+  </defs>
+  <path d="M110 28c26 0 48 14 60 36l16 18-20 6 2 24c0 38-25 72-58 72s-58-34-58-72l2-24-20-6 16-18c12-22 34-36 60-36Z" fill="url(#skin)" stroke="#ffcece" stroke-width="8" stroke-linejoin="round"/>
+  <path d="m76 64-18-28 28 10m56 18 18-28-28 10" fill="none" stroke="#ffcece" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+  <ellipse cx="90" cy="102" rx="11" ry="16" fill="#fff0c7"/>
+  <ellipse cx="130" cy="102" rx="11" ry="16" fill="#fff0c7"/>
+  <circle cx="90" cy="104" r="5" fill="#2c0812"/>
+  <circle cx="130" cy="104" r="5" fill="#2c0812"/>
+  <path d="M88 140c8 8 36 8 44 0" fill="none" stroke="#2c0812" stroke-linecap="round" stroke-width="8"/>
+  <path d="m92 124 8 12m28-12-8 12" stroke="#fff0c7" stroke-linecap="round" stroke-width="7"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Drakee</title>
+  <path d="M110 58c-28 0-46 22-46 49 0 28 18 48 46 48s46-20 46-48c0-27-18-49-46-49Z" fill="#4f318a" stroke="#ccb8ff" stroke-width="8"/>
+  <path d="M82 64 44 52 24 86l40 4" fill="#2a184e" stroke="#ccb8ff" stroke-linejoin="round" stroke-width="8"/>
+  <path d="m138 64 38-12 20 34-40 4" fill="#2a184e" stroke="#ccb8ff" stroke-linejoin="round" stroke-width="8"/>
+  <path d="m90 52 10-22 10 16 10-16 10 22" fill="#ccb8ff"/>
+  <ellipse cx="93" cy="103" rx="10" ry="15" fill="#fff"/>
+  <ellipse cx="127" cy="103" rx="10" ry="15" fill="#fff"/>
+  <circle cx="93" cy="106" r="5" fill="#120a24"/>
+  <circle cx="127" cy="106" r="5" fill="#120a24"/>
+  <path d="M92 132c6 6 30 6 36 0" fill="none" stroke="#120a24" stroke-linecap="round" stroke-width="8"/>
+</svg>

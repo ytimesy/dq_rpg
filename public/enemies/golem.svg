@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Golem</title>
+  <g fill="#7d7567" stroke="#d2c5af" stroke-width="8" stroke-linejoin="round">
+    <rect x="70" y="38" width="80" height="56" rx="10"/>
+    <rect x="60" y="96" width="100" height="72" rx="12"/>
+    <rect x="38" y="104" width="22" height="54" rx="8"/>
+    <rect x="160" y="104" width="22" height="54" rx="8"/>
+    <rect x="78" y="168" width="22" height="28" rx="8"/>
+    <rect x="120" y="168" width="22" height="28" rx="8"/>
+  </g>
+  <circle cx="92" cy="66" r="6" fill="#1d1c19"/>
+  <circle cx="128" cy="66" r="6" fill="#1d1c19"/>
+  <path d="M90 82c10 6 30 6 40 0" fill="none" stroke="#1d1c19" stroke-linecap="round" stroke-width="6"/>
+  <path d="M90 118h40M82 136h56" stroke="#5e5649" stroke-width="6"/>
+</svg>

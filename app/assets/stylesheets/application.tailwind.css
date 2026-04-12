@@ -139,6 +139,10 @@ select {
   min-height: 1.25rem;
 }
 
+.world-stage {
+  position: relative;
+}
+
 .credits-note {
   margin: 0.35rem 0 0;
   font-size: 0.78rem;
@@ -162,6 +166,22 @@ select {
   isolation: isolate;
   background: #1a2434;
   transform: translateZ(0);
+}
+
+.battle-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: none;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: clamp(0.9rem, 3vw, 1.4rem);
+  pointer-events: none;
+}
+
+.battle-overlay.is-active {
+  display: flex;
+  animation: battle-overlay-rise 180ms ease both;
 }
 
 .world-map::before {
@@ -257,11 +277,37 @@ select {
   box-shadow: inset 0 0 0 1px rgba(255, 232, 176, 0.38);
 }
 
+.map-tile.is-boss {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 123, 123, 0.52),
+    0 0 0.45rem rgba(184, 40, 40, 0.26);
+}
+
+.boss-marker {
+  position: absolute;
+  right: 0.18rem;
+  top: 0.18rem;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 228, 197, 0.7);
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 28%, #ffb56a, #ab2323 72%);
+  color: #fff7e2;
+  font-size: 0.58rem;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 0.38rem rgba(255, 94, 94, 0.36);
+  animation: boss-marker-pulse 1.3s ease-in-out infinite alternate;
+}
+
 .player-marker {
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 1;
+  z-index: 2;
   width: 42%;
   height: 74%;
   transform: translate(-50%, -50%);
@@ -315,6 +361,379 @@ select {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.6rem;
+}
+
+.move-pad button[data-direction] {
+  width: 2.35rem;
+  min-height: 1.95rem;
+  justify-self: center;
+  padding: 0.2rem 0;
+  font-size: 0.82rem;
+}
+
+.hero-card {
+  margin-top: 0.95rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.hero-card-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.hero-level {
+  margin: 0;
+  color: var(--dq-text-dim);
+  font-size: 0.76rem;
+}
+
+.hero-stage {
+  position: relative;
+  min-height: 10.25rem;
+  border: 2px solid var(--dq-white);
+  background:
+    radial-gradient(circle at top, rgba(99, 144, 255, 0.22), transparent 48%),
+    linear-gradient(180deg, rgba(19, 29, 58, 0.98), rgba(7, 9, 18, 0.98));
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.hero-stage::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 26%;
+  background:
+    linear-gradient(180deg, rgba(44, 64, 36, 0), rgba(44, 64, 36, 0.28)),
+    repeating-linear-gradient(90deg, rgba(117, 166, 120, 0.2) 0 10px, rgba(66, 112, 70, 0.2) 10px 20px);
+}
+
+.hero-sprite {
+  position: relative;
+  width: 6.35rem;
+  height: 8.05rem;
+  --armor-fill: linear-gradient(180deg, #4e66c8, #243f92);
+  --armor-stroke: #d4e1ff;
+}
+
+.hero-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 0.4rem;
+  width: 68%;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.36);
+  transform: translateX(-50%);
+}
+
+.hero-cape {
+  position: absolute;
+  left: 50%;
+  top: 2.45rem;
+  width: 3.25rem;
+  height: 4rem;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #ca4a57, #6f162a);
+  clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%);
+}
+
+.hero-legs {
+  position: absolute;
+  left: 50%;
+  top: 5.55rem;
+  width: 2.6rem;
+  height: 2.55rem;
+  transform: translateX(-50%);
+}
+
+.hero-legs::before,
+.hero-legs::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 0.86rem;
+  height: 2.45rem;
+  border-radius: 0.2rem 0.2rem 0.38rem 0.38rem;
+  background: linear-gradient(180deg, #303855, #121728);
+  box-shadow: inset 0 -0.18rem 0 rgba(243, 232, 206, 0.28);
+}
+
+.hero-legs::before {
+  left: 0.2rem;
+}
+
+.hero-legs::after {
+  right: 0.2rem;
+}
+
+.hero-body {
+  position: absolute;
+  left: 50%;
+  top: 2.75rem;
+  width: 2.85rem;
+  height: 3.2rem;
+  transform: translateX(-50%);
+  border: 2px solid var(--armor-stroke);
+  border-radius: 0.7rem 0.7rem 0.95rem 0.95rem;
+  background: var(--armor-fill);
+  z-index: 2;
+}
+
+.hero-body::before,
+.hero-body::after {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  width: 0.7rem;
+  height: 2.2rem;
+  border: 2px solid var(--armor-stroke);
+  border-radius: 999px;
+  background: var(--armor-fill);
+}
+
+.hero-body::before {
+  left: -0.6rem;
+  transform: rotate(14deg);
+}
+
+.hero-body::after {
+  right: -0.6rem;
+  transform: rotate(-16deg);
+}
+
+.hero-head {
+  position: absolute;
+  left: 50%;
+  top: 1.45rem;
+  width: 1.7rem;
+  height: 1.85rem;
+  transform: translateX(-50%);
+  border-radius: 52% 52% 48% 48%;
+  background: linear-gradient(180deg, #f7dbb7, #e0a871);
+  z-index: 4;
+}
+
+.hero-hair {
+  position: absolute;
+  left: 50%;
+  top: 1.22rem;
+  width: 1.95rem;
+  height: 0.95rem;
+  transform: translateX(-50%);
+  border-radius: 60% 60% 30% 30%;
+  background: linear-gradient(180deg, #24142e, #0f0915);
+  z-index: 5;
+}
+
+.hero-weapon {
+  position: absolute;
+  z-index: 4;
+}
+
+.weapon-none .hero-weapon {
+  display: none;
+}
+
+.weapon-bamboo .hero-weapon {
+  left: 4.95rem;
+  top: 2.2rem;
+  width: 0.34rem;
+  height: 4rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #d6b56a, #8b6331);
+  border: 2px solid #f8df9a;
+  transform: rotate(16deg);
+}
+
+.weapon-club .hero-weapon {
+  left: 4.85rem;
+  top: 2.35rem;
+  width: 0.48rem;
+  height: 3.8rem;
+  border-radius: 0.35rem;
+  background: linear-gradient(180deg, #ae6c2b, #6f3d12);
+  border: 2px solid #f0c17b;
+  transform: rotate(17deg);
+}
+
+.weapon-club .hero-weapon::before {
+  content: "";
+  position: absolute;
+  left: -0.35rem;
+  top: -0.75rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ba7833, #7d4617);
+  border: 2px solid #f0c17b;
+}
+
+.weapon-sword .hero-weapon,
+.weapon-steel .hero-weapon,
+.weapon-flame .hero-weapon,
+.weapon-loto .hero-weapon {
+  left: 4.9rem;
+  top: 1.9rem;
+  width: 0.36rem;
+  height: 4.45rem;
+  background: linear-gradient(180deg, #f7fcff, #8ab1d6);
+  border: 2px solid #e5f5ff;
+  border-radius: 0.3rem;
+  transform: rotate(14deg);
+}
+
+.weapon-sword .hero-weapon::before,
+.weapon-steel .hero-weapon::before,
+.weapon-flame .hero-weapon::before,
+.weapon-loto .hero-weapon::before {
+  content: "";
+  position: absolute;
+  left: -0.55rem;
+  bottom: -0.15rem;
+  width: 1.35rem;
+  height: 0.28rem;
+  background: #f7d37c;
+  border: 2px solid #ffe8b0;
+  border-radius: 999px;
+}
+
+.weapon-sword .hero-weapon::after,
+.weapon-steel .hero-weapon::after,
+.weapon-flame .hero-weapon::after,
+.weapon-loto .hero-weapon::after {
+  content: "";
+  position: absolute;
+  left: -0.02rem;
+  bottom: -0.95rem;
+  width: 0.2rem;
+  height: 0.82rem;
+  background: #7f4c23;
+  border: 2px solid #d7a469;
+  border-radius: 0.2rem;
+}
+
+.weapon-steel .hero-weapon {
+  width: 0.46rem;
+  height: 4.9rem;
+  background: linear-gradient(180deg, #ffffff, #b8d0eb 45%, #6d8cae);
+  box-shadow: 0 0 0.35rem rgba(189, 222, 255, 0.45);
+}
+
+.weapon-steel .hero-weapon::before {
+  width: 1.55rem;
+  left: -0.67rem;
+}
+
+.weapon-flame .hero-weapon {
+  width: 0.48rem;
+  height: 4.95rem;
+  background: linear-gradient(180deg, #fff0ba, #ff964c 46%, #a92c16);
+  box-shadow: 0 0 0.42rem rgba(255, 128, 72, 0.5);
+}
+
+.weapon-flame .hero-weapon::before {
+  width: 1.6rem;
+  left: -0.7rem;
+  background: #ffb14a;
+  border-color: #fff1ba;
+}
+
+.weapon-loto .hero-weapon {
+  width: 0.5rem;
+  height: 5.15rem;
+  background: linear-gradient(180deg, #ffffff, #9be9ff 42%, #3e89d7 74%, #173568);
+  box-shadow: 0 0 0.5rem rgba(120, 214, 255, 0.58);
+}
+
+.weapon-loto .hero-weapon::before {
+  width: 1.7rem;
+  left: -0.76rem;
+  background: linear-gradient(90deg, #e8bc58, #fff5be, #e8bc58);
+  border-color: #fff5d2;
+}
+
+.weapon-loto .hero-weapon::after {
+  background: #12325c;
+  border-color: #91c8ff;
+}
+
+.armor-cloth {
+  --armor-fill: linear-gradient(180deg, #4e66c8, #243f92);
+  --armor-stroke: #d4e1ff;
+}
+
+.armor-leather {
+  --armor-fill: linear-gradient(180deg, #aa6f39, #5d3417);
+  --armor-stroke: #f1d2a5;
+}
+
+.armor-chain {
+  --armor-fill: repeating-linear-gradient(135deg, #9aa2b2 0 0.42rem, #6f7787 0.42rem 0.84rem);
+  --armor-stroke: #ebeff8;
+}
+
+.armor-steel {
+  --armor-fill: linear-gradient(180deg, #dfe6f2, #788295);
+  --armor-stroke: #ffffff;
+}
+
+.armor-magic {
+  --armor-fill: linear-gradient(180deg, #5ac2bf, #1c5967);
+  --armor-stroke: #f6f4c9;
+}
+
+.armor-steel .hero-body,
+.armor-steel .hero-body::before,
+.armor-steel .hero-body::after {
+  box-shadow: inset 0 -0.18rem 0 rgba(35, 49, 74, 0.26);
+}
+
+.armor-magic .hero-body,
+.armor-magic .hero-body::before,
+.armor-magic .hero-body::after {
+  box-shadow:
+    inset 0 -0.18rem 0 rgba(10, 44, 50, 0.28),
+    0 0 0.35rem rgba(108, 224, 210, 0.24);
+}
+
+.hero-loadout {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.hero-stats div {
+  padding: 0.34rem 0.42rem;
+  border: 1px solid rgba(248, 248, 248, 0.22);
+  background: rgba(15, 20, 39, 0.65);
+}
+
+.hero-stats dt {
+  margin-bottom: 0.1rem;
+  color: var(--dq-text-dim);
+  font-size: 0.62rem;
+}
+
+.hero-stats dd {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.hero-loadout p {
+  margin: 0;
+  color: var(--dq-text-dim);
+  font-size: 0.8rem;
 }
 
 .battle-actions,
@@ -376,6 +795,134 @@ select {
   gap: 0.45rem;
 }
 
+.battle-overlay-shell {
+  width: 100%;
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+  justify-items: center;
+}
+
+.battle-overlay-ui {
+  width: min(100%, 34rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: 0.6rem;
+  align-items: start;
+  justify-self: center;
+  align-self: start;
+  pointer-events: auto;
+}
+
+.battle-window {
+  padding: 0.75rem;
+  border: 2px solid var(--dq-white);
+  background: rgba(5, 5, 5, 0.94);
+  box-shadow:
+    0 0 0 4px rgba(23, 63, 215, 0.42),
+    0 16px 30px rgba(0, 0, 0, 0.28);
+}
+
+.battle-window h3 {
+  margin: 0.1rem 0 0;
+  font-size: 0.92rem;
+}
+
+.battle-control-window {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.battle-status-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.55rem;
+  border: 1px solid rgba(248, 248, 248, 0.48);
+  background: rgba(16, 22, 43, 0.92);
+}
+
+.battle-status-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.battle-status-copy {
+  margin: 0;
+  color: var(--dq-text-dim);
+  font-size: 0.7rem;
+}
+
+.battle-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.battle-status-grid div {
+  padding: 0.35rem 0.45rem;
+  border: 1px solid rgba(248, 248, 248, 0.22);
+}
+
+.battle-status-grid dt {
+  margin-bottom: 0.12rem;
+  color: var(--dq-text-dim);
+  font-size: 0.62rem;
+}
+
+.battle-status-grid dd {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.boss-status-card {
+  box-shadow: inset 0 0 0 1px rgba(255, 186, 186, 0.42);
+}
+
+.battle-screen {
+  width: min(100%, 24rem);
+  display: grid;
+  gap: 0.7rem;
+  justify-self: center;
+  pointer-events: auto;
+}
+
+.enemy-portrait-card {
+  width: min(100%, 15rem);
+  gap: 0.45rem;
+}
+
+.enemy-portrait-frame {
+  display: grid;
+  place-items: center;
+  min-height: 11rem;
+  padding: 0.75rem;
+  border: 2px solid var(--dq-white);
+  background:
+    radial-gradient(circle at top, rgba(73, 109, 221, 0.3), transparent 48%),
+    rgba(5, 5, 5, 0.94);
+  box-shadow:
+    0 0 0 4px rgba(23, 63, 215, 0.52),
+    0 18px 30px rgba(0, 0, 0, 0.28);
+}
+
+.enemy-portrait {
+  width: min(100%, 10.5rem);
+  max-height: 9.5rem;
+  object-fit: contain;
+  image-rendering: auto;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.35));
+}
+
+.battle-screen-copy {
+  margin: 0;
+  color: var(--dq-text-dim);
+  font-size: 0.84rem;
+  text-align: center;
+}
+
 .enemy-card {
   min-height: 11rem;
   border-radius: 0;
@@ -384,14 +931,52 @@ select {
   background: transparent;
 }
 
+.battle-overlay .enemy-card {
+  min-height: auto;
+  background: rgba(5, 5, 5, 0.94);
+  box-shadow:
+    0 0 0 4px rgba(23, 63, 215, 0.72),
+    0 20px 40px rgba(0, 0, 0, 0.34);
+}
+
 .enemy-name {
   margin: 0 0 0.8rem;
   font-size: 1.25rem;
   color: var(--dq-white);
 }
 
+.battle-status-card .enemy-name {
+  margin: 0;
+  font-size: 1rem;
+}
+
 .boss-card {
   box-shadow: inset 0 0 0 2px rgba(255, 186, 186, 0.45);
+}
+
+.battle-control-window .battle-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0;
+  gap: 0.45rem;
+}
+
+.battle-control-window .command-button {
+  padding: 0.52rem 0.35rem;
+  font-size: 0.8rem;
+}
+
+.battle-log-list {
+  margin-top: 0.45rem;
+  max-height: 8rem;
+  overflow: auto;
+  padding-right: 0.35rem;
+  padding-left: 1rem;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+}
+
+#dq-enemy:empty {
+  display: none;
 }
 
 .victory-card .enemy-name {
@@ -421,6 +1006,30 @@ select {
   }
 }
 
+@keyframes battle-overlay-rise {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes boss-marker-pulse {
+  from {
+    transform: scale(0.96);
+    box-shadow: 0 0 0.24rem rgba(255, 94, 94, 0.3);
+  }
+
+  to {
+    transform: scale(1.06);
+    box-shadow: 0 0 0.54rem rgba(255, 128, 96, 0.48);
+  }
+}
+
 @media (max-width: 960px) {
   .quest-grid {
     grid-template-columns: 1fr;
@@ -432,6 +1041,14 @@ select {
   .controls-panel,
   .battle-panel {
     grid-column: auto;
+  }
+
+  .battle-screen {
+    width: min(100%, 22rem);
+  }
+
+  .battle-overlay-ui {
+    grid-template-columns: 1fr;
   }
 }
 

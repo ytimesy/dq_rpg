@@ -8,30 +8,30 @@ const SPELLS = {
 }
 
 const WORLD_MAP = [
-  "MMMM MMMM MMMM MMMM MMMM MMMM".replaceAll(" ", ""),
-  "MCPP PPFP PPPP PMMM MPPP PDMM".replaceAll(" ", ""),
-  "MPPP PFFP PMPP PMMM MPPP PPMM".replaceAll(" ", ""),
-  "MPMM PPPP PMPP PPPP PFFF PPMM".replaceAll(" ", ""),
-  "MPMM MPPP PMMM PPPP PFFF PPMM".replaceAll(" ", ""),
-  "MPPP PTPP PSSP PPPP PPPP PPMM".replaceAll(" ", ""),
-  "MPPP PPPP PSSP PFFF PMMM PPMM".replaceAll(" ", ""),
-  "MPPP PFFF PPPP PFFF PMMM PPMM".replaceAll(" ", ""),
-  "MPPP PFFF PPPP PPPP PPPP PPMM".replaceAll(" ", ""),
-  "MPPP PPPP PPPP PMMM MMMP PPMM".replaceAll(" ", ""),
-  "MPMM MPPP PPPP PMPP PPPP PPMM".replaceAll(" ", ""),
-  "MPPP PPPP PMPP PMPP PPPF PPMM".replaceAll(" ", ""),
-  "MPPP PMMM PMPP PMPP PPPF PPMM".replaceAll(" ", ""),
-  "MPPP PMPP PMPP PMPP PFFF PPMM".replaceAll(" ", ""),
-  "MPPP PMPP PMPP PPPP PFFF PHMM".replaceAll(" ", ""),
-  "MPPP PMPP PMMM MMMP PPPP PPMM".replaceAll(" ", ""),
-  "MPPP PTPP PPPP PPPP PSSP PPMM".replaceAll(" ", ""),
-  "MPPP PPPP PFFF PPPP PSSP PPMM".replaceAll(" ", ""),
-  "MPMM MPPP PFFF PMMM MMPP PPMM".replaceAll(" ", ""),
-  "MPPP PPPP PPPP PMPP PPPP PPMM".replaceAll(" ", ""),
-  "MPPP FFFF PPPP PMPP PFFF PPMM".replaceAll(" ", ""),
-  "MPPP PPPP PPPP PPPP PFFF PPMM".replaceAll(" ", ""),
-  "MPPP PPPP PPPP PPPP PPPP PPMM".replaceAll(" ", ""),
-  "MMMM MMMM MMMM MMMM MMMM MMMM".replaceAll(" ", "")
+  "MMMM MMMM MMMM MMMM MMMM MMMM MMMM MMMM".replaceAll(" ", ""),
+  "MCPP PPFP PPPP PMMM MPPP PPPP PPDM MMMM".replaceAll(" ", ""),
+  "MPPP PFFP PMPP PMMM MPPP PTPP PPMM MMMM".replaceAll(" ", ""),
+  "MPMM PPPP PMPP PPPP PFFF PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPMM MPPP PMMM PPPP PFFF PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PTPP PSSP PPPP PPPP PPMM MTPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PSSP PFFF PMMM PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PFFF PPPP PFFF PMMM PPMM MPPP PHMM".replaceAll(" ", ""),
+  "MPPP PFFF PPPP PPPP PPPP PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PMMM MMMP PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPMM MPPP PPPP PMPP PPPP PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PMPP PMPP PPPF PPMM MPPP TPMM".replaceAll(" ", ""),
+  "MPPP PMMM PMPP PMPP PPPF PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PMPP PMPP PMPP PFFF PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PMPP PMPP PPPP PFFF PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PMPP PMMM MMMP PPPP PPMM MPPP PPMM".replaceAll(" ", ""),
+  "MPPP PTPP PPPP PPPP PSSP PPMM PTPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PFFF PPPP PSSP PPMM PPPP PPMM".replaceAll(" ", ""),
+  "MPMM MPPP PFFF PMMM MMPP PPMM PFFF PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PMPP PPPP PPMM PFFF PPMM".replaceAll(" ", ""),
+  "MPPP FFFF PPPP PMPP PFFF PPMM PPPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PPPP PFFF PPMM PPPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PPPP PPPP PPMM PPPP PPMM".replaceAll(" ", ""),
+  "MMMM MMMM MMMM MMMM MMMM MMMM MMMM MMMM".replaceAll(" ", "")
 ]
 
 const TILE_INFO = {
@@ -61,14 +61,17 @@ const WEAPONS = [
   { id: "bamboo", name: "たけざお", bonus: 2, price: 12 },
   { id: "club", name: "こんぼう", bonus: 4, price: 24 },
   { id: "sword", name: "どうのつるぎ", bonus: 8, price: 60 },
-  { id: "steel", name: "はがねのつるぎ", bonus: 14, price: 120 }
+  { id: "steel", name: "はがねのつるぎ", bonus: 14, price: 120 },
+  { id: "flame", name: "ほのおのつるぎ", bonus: 18, price: 0, shop: false },
+  { id: "loto", name: "ロトのつるぎ", bonus: 24, price: 0, shop: false }
 ]
 
 const ARMORS = [
   { id: "cloth", name: "ぬののふく", bonus: 0, price: 0 },
   { id: "leather", name: "かわのふく", bonus: 2, price: 20 },
   { id: "chain", name: "くさりかたびら", bonus: 5, price: 45 },
-  { id: "steel", name: "はがねのよろい", bonus: 9, price: 100 }
+  { id: "steel", name: "はがねのよろい", bonus: 9, price: 100 },
+  { id: "magic", name: "まほうのよろい", bonus: 13, price: 0, shop: false }
 ]
 
 const ENEMIES = {
@@ -84,6 +87,28 @@ const ENEMIES = {
       gold: 4,
       actions: [
         { type: "heavy", chance: 0.28, min: 6, max: 9, message: "ドラキーは くうちゅうから つめを たてた。" }
+      ]
+    },
+    {
+      key: "crow",
+      name: "おおがらす",
+      maxHp: 9,
+      attack: 5,
+      defense: 2,
+      xp: 3,
+      gold: 5,
+      evadeChance: 0.1
+    },
+    {
+      key: "wolf",
+      name: "おおかみ",
+      maxHp: 11,
+      attack: 6,
+      defense: 2,
+      xp: 5,
+      gold: 6,
+      actions: [
+        { type: "heavy", chance: 0.24, min: 5, max: 8, message: "おおかみは すばやく かみついた。" }
       ]
     }
   ],
@@ -112,6 +137,30 @@ const ENEMIES = {
       actions: [
         { type: "spell", chance: 0.4, min: 7, max: 11, message: "まほうつかいは ギラを となえた。", ignoresGuard: true }
       ]
+    },
+    {
+      key: "skeleton",
+      name: "がいこつ",
+      maxHp: 18,
+      attack: 10,
+      defense: 5,
+      xp: 12,
+      gold: 11,
+      actions: [
+        { type: "heavy", chance: 0.3, min: 8, max: 11, message: "がいこつは さびた剣で なぎはらった。" }
+      ]
+    },
+    {
+      key: "chimera",
+      name: "キメラ",
+      maxHp: 20,
+      attack: 11,
+      defense: 5,
+      xp: 14,
+      gold: 13,
+      actions: [
+        { type: "flame", chance: 0.3, min: 8, max: 12, message: "キメラは ちいさな炎を はいた。" }
+      ]
     }
   ],
   high: [
@@ -138,6 +187,30 @@ const ENEMIES = {
       evadeChance: 0.08,
       actions: [
         { type: "heavy", chance: 0.28, min: 10, max: 14, message: "しりょうのきしは つよく きりつけた。" }
+      ]
+    },
+    {
+      key: "hellhound",
+      name: "ヘルハウンド",
+      maxHp: 30,
+      attack: 17,
+      defense: 7,
+      xp: 24,
+      gold: 20,
+      actions: [
+        { type: "heavy", chance: 0.32, min: 11, max: 15, message: "ヘルハウンドは ほえながら とびかかった。" }
+      ]
+    },
+    {
+      key: "starchimera",
+      name: "スターキメラ",
+      maxHp: 34,
+      attack: 18,
+      defense: 8,
+      xp: 30,
+      gold: 26,
+      actions: [
+        { type: "flame", chance: 0.36, min: 13, max: 18, message: "スターキメラは まばゆい炎を はきだした。", ignoresGuard: true }
       ]
     }
   ],
@@ -172,6 +245,63 @@ const ENEMIES = {
   }
 }
 
+const FIELD_BOSSES = [
+  {
+    key: "killerwolf",
+    name: "キラーウルフ",
+    x: 13,
+    y: 3,
+    maxHp: 22,
+    attack: 12,
+    defense: 5,
+    xp: 18,
+    gold: 16,
+    boss: true,
+    rewardArmor: "magic",
+    battleIntro: "草原のぬし、キラーウルフが とびかかってきた。",
+    actions: [
+      { type: "heavy", chance: 0.34, min: 8, max: 12, message: "キラーウルフは するどいキバを つきたてた。" }
+    ]
+  },
+  {
+    key: "deathknight",
+    name: "デスナイト",
+    x: 14,
+    y: 17,
+    maxHp: 38,
+    attack: 17,
+    defense: 9,
+    xp: 34,
+    gold: 28,
+    boss: true,
+    rewardWeapon: "flame",
+    battleIntro: "古戦場の影から、デスナイトが あらわれた。",
+    actions: [
+      { type: "heavy", chance: 0.28, min: 10, max: 14, message: "デスナイトは のろいの剣で きりつけた。" },
+      { type: "spell", chance: 0.18, min: 9, max: 13, message: "デスナイトは あやしい炎を はなった。", ignoresGuard: true }
+    ]
+  },
+  {
+    key: "archchimera",
+    name: "アークキメラ",
+    x: 26,
+    y: 8,
+    maxHp: 54,
+    attack: 21,
+    defense: 11,
+    xp: 52,
+    gold: 40,
+    boss: true,
+    magicResist: 0.18,
+    rewardWeapon: "loto",
+    battleIntro: "空を焦がしながら、アークキメラが 舞いおりた。",
+    actions: [
+      { type: "flame", chance: 0.38, min: 14, max: 19, message: "アークキメラは しゃくねつの炎を はいた。", ignoresGuard: true },
+      { type: "heavy", chance: 0.22, min: 11, max: 15, message: "アークキメラは つばさで うちすえた。" }
+    ]
+  }
+]
+
 const START_POSITION = { x: 1, y: 1 }
 const VIEWPORT_SIZE = 11
 const MOVE_REPEAT_MS = 120
@@ -196,9 +326,46 @@ const TERRAIN_PHOTO_TUNING = {
 
 const WEAPON_LOOKUP = Object.fromEntries(WEAPONS.map((item) => [item.id, item]))
 const ARMOR_LOOKUP = Object.fromEntries(ARMORS.map((item) => [item.id, item]))
+const FIELD_BOSS_LOOKUP = Object.fromEntries(FIELD_BOSSES.map((boss) => [boss.key, boss]))
 const ENEMY_LOOKUP = Object.fromEntries(
-  [...ENEMIES.low, ...ENEMIES.mid, ...ENEMIES.high, ENEMIES.caveBoss, ENEMIES.finalBoss].map((enemy) => [enemy.key, enemy])
+  [...ENEMIES.low, ...ENEMIES.mid, ...ENEMIES.high, ...FIELD_BOSSES, ENEMIES.caveBoss, ENEMIES.finalBoss].map((enemy) => [enemy.key, enemy])
 )
+const ENCOUNTER_TABLES = {
+  low: {
+    plain: ["slime", "slime", "crow", "crow"],
+    forest: ["drakee", "drakee", "wolf", "crow"],
+    swamp: ["slime", "drakee", "wolf", "crow"]
+  },
+  mid: {
+    plain: ["ghost", "magician", "skeleton", "skeleton"],
+    forest: ["wolf", "ghost", "chimera", "chimera"],
+    swamp: ["ghost", "magician", "skeleton", "chimera"]
+  },
+  high: {
+    plain: ["scorpion", "hellhound", "knight", "knight"],
+    forest: ["hellhound", "starchimera", "knight", "chimera"],
+    swamp: ["scorpion", "hellhound", "starchimera", "knight"]
+  }
+}
+const ENEMY_IMAGE_PATHS = {
+  slime: "/enemies/slime.svg",
+  drakee: "/enemies/drakee.svg",
+  crow: "/enemies/crow.svg",
+  wolf: "/enemies/wolf.svg",
+  ghost: "/enemies/ghost.svg",
+  magician: "/enemies/magician.svg",
+  skeleton: "/enemies/skeleton.svg",
+  chimera: "/enemies/chimera.svg",
+  scorpion: "/enemies/scorpion.svg",
+  knight: "/enemies/knight.svg",
+  hellhound: "/enemies/hellhound.svg",
+  starchimera: "/enemies/starchimera.svg",
+  killerwolf: "/enemies/wolf.svg",
+  deathknight: "/enemies/knight.svg",
+  archchimera: "/enemies/starchimera.svg",
+  golem: "/enemies/golem.svg",
+  dragonlord: "/enemies/dragonlord.svg"
+}
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -227,11 +394,15 @@ function hydrateEnemy(enemy) {
   }
 }
 
+function createFieldBossProgress(progress = {}) {
+  return Object.fromEntries(FIELD_BOSSES.map((boss) => [boss.key, Boolean(progress?.[boss.key])]))
+}
+
 function createInitialState() {
   const startingProfile = LEVEL_TABLE[0]
 
   return {
-    version: 2,
+    version: 3,
     mode: "explore",
     player: {
       level: 1,
@@ -249,6 +420,7 @@ function createInitialState() {
       guarding: false
     },
     progress: {
+      fieldBosses: createFieldBossProgress(),
       caveCleared: false,
       dragonDefeated: false
     },
@@ -280,14 +452,14 @@ function loadState() {
     if (!raw) return createInitialState()
 
     const parsed = JSON.parse(raw)
-    if (![1, 2].includes(parsed?.version)) return createInitialState()
+    if (![1, 2, 3].includes(parsed?.version)) return createInitialState()
 
     const initial = createInitialState()
     const level = clamp(Number(parsed.player?.level) || 1, 1, LEVEL_TABLE.length)
     const profile = LEVEL_TABLE[level - 1]
 
     return {
-      version: 2,
+      version: 3,
       mode: ["explore", "battle", "victory"].includes(parsed.mode) ? parsed.mode : "explore",
       player: {
         level,
@@ -305,6 +477,7 @@ function loadState() {
         guarding: Boolean(parsed.player?.guarding)
       },
       progress: {
+        fieldBosses: createFieldBossProgress(parsed.progress?.fieldBosses),
         caveCleared: Boolean(parsed.progress?.caveCleared),
         dragonDefeated: Boolean(parsed.progress?.dragonDefeated)
       },
@@ -326,7 +499,12 @@ class DragonQuestGame {
     this.statsElement = root.querySelector("#dq-stats")
     this.objectivesElement = root.querySelector("#dq-objectives")
     this.enemyElement = root.querySelector("#dq-enemy")
+    this.battleOverlayElement = root.querySelector("#dq-battle-overlay")
+    this.battleUiElement = root.querySelector("#dq-battle-ui")
+    this.battleStatusElement = root.querySelector("#dq-battle-status")
+    this.battleLogElement = root.querySelector("#dq-battle-log")
     this.logElement = root.querySelector("#dq-log")
+    this.heroElement = root.querySelector("#dq-hero")
     this.contextElement = root.querySelector("#dq-context")
     this.actionButton = root.querySelector("#dq-action-button")
     this.attackSpellButton = root.querySelector("#dq-attack-spell-button")
@@ -365,6 +543,14 @@ class DragonQuestGame {
     return this.playerProfile().defense + ARMOR_LOOKUP[this.state.player.armor].bonus
   }
 
+  weaponRank(id) {
+    return WEAPONS.findIndex((item) => item.id === id)
+  }
+
+  armorRank(id) {
+    return ARMORS.findIndex((item) => item.id === id)
+  }
+
   knownSpells() {
     return Object.values(SPELLS).filter((spell) => this.state.player.level >= spell.unlockLevel)
   }
@@ -389,9 +575,27 @@ class DragonQuestGame {
 
   currentZone() {
     const distanceFromCastle = Math.abs(this.state.player.x - START_POSITION.x) + Math.abs(this.state.player.y - START_POSITION.y)
-    if (this.state.player.x >= 18 && this.state.player.y <= 6) return "high"
-    if (distanceFromCastle >= 14 || this.state.player.y >= 12 || this.state.player.x >= 12) return "mid"
+    if (this.state.player.x >= 24 && this.state.player.y <= 8) return "high"
+    if (distanceFromCastle >= 16 || this.state.player.y >= 12 || this.state.player.x >= 16) return "mid"
     return "low"
+  }
+
+  encounterPoolFor(tile) {
+    const zone = this.currentZone()
+    const terrain = tile.terrain
+
+    return ENCOUNTER_TABLES[zone]?.[terrain] || ENCOUNTER_TABLES[zone]?.plain || ENCOUNTER_TABLES.low.plain
+  }
+
+  fieldBossAt(x, y) {
+    return FIELD_BOSSES.find((boss) => boss.x === x && boss.y === y && !this.state.progress.fieldBosses?.[boss.key]) || null
+  }
+
+  startBattle(enemy, message) {
+    this.stopHeldMove()
+    this.state.mode = "battle"
+    this.state.enemy = cloneEnemy(enemy)
+    this.log(message)
   }
 
   persist() {
@@ -657,6 +861,13 @@ class DragonQuestGame {
       return
     }
 
+    const fieldBoss = this.fieldBossAt(nextX, nextY)
+    if (fieldBoss) {
+      this.startBattle(fieldBoss, fieldBoss.battleIntro)
+      this.saveAndRender()
+      return
+    }
+
     this.maybeTriggerEncounter(nextTile)
     this.saveAndRender()
   }
@@ -689,11 +900,9 @@ class DragonQuestGame {
 
     if (Math.random() >= encounterRate) return
 
-    const enemy = cloneEnemy(chooseRandom(ENEMIES[this.currentZone()]))
-    this.stopHeldMove()
-    this.state.mode = "battle"
-    this.state.enemy = enemy
-    this.log(`${enemy.name}が あらわれた。`)
+    const enemyKey = chooseRandom(this.encounterPoolFor(tile))
+    const enemy = ENEMY_LOOKUP[enemyKey]
+    this.startBattle(enemy, `${enemy.name}が あらわれた。`)
   }
 
   performAction() {
@@ -772,11 +981,7 @@ class DragonQuestGame {
       return
     }
 
-    const enemy = cloneEnemy(ENEMIES.caveBoss)
-    this.stopHeldMove()
-    this.state.mode = "battle"
-    this.state.enemy = enemy
-    this.log("洞窟の最深部で、ゴーレムが立ちはだかった。")
+    this.startBattle(ENEMIES.caveBoss, "洞窟の最深部で、ゴーレムが立ちはだかった。")
   }
 
   challengeDragonlord() {
@@ -787,11 +992,7 @@ class DragonQuestGame {
 
     if (this.state.mode === "battle" && this.state.enemy?.key === "dragonlord") return
 
-    const enemy = cloneEnemy(ENEMIES.finalBoss)
-    this.stopHeldMove()
-    this.state.mode = "battle"
-    this.state.enemy = enemy
-    this.log("玉座の間で、りゅうおうが不敵に笑った。")
+    this.startBattle(ENEMIES.finalBoss, "玉座の間で、りゅうおうが不敵に笑った。")
   }
 
   attackEnemy() {
@@ -1037,11 +1238,44 @@ class DragonQuestGame {
     this.log("持ち金は半分になったが、冒険は続く。")
   }
 
+  grantBossReward(enemy) {
+    if (enemy.rewardWeapon) {
+      const weapon = WEAPON_LOOKUP[enemy.rewardWeapon]
+      if (weapon) {
+        if (this.weaponRank(weapon.id) > this.weaponRank(this.state.player.weapon)) {
+          this.state.player.weapon = weapon.id
+          this.log(`${enemy.name}の宝箱から ${weapon.name}を 手に入れた。`)
+          this.log(`${weapon.name}を 装備した。`)
+        } else {
+          this.log(`${enemy.name}の宝箱には ${weapon.name}が あったが、今の武器のほうが強い。`)
+        }
+      }
+    }
+
+    if (enemy.rewardArmor) {
+      const armor = ARMOR_LOOKUP[enemy.rewardArmor]
+      if (armor) {
+        if (this.armorRank(armor.id) > this.armorRank(this.state.player.armor)) {
+          this.state.player.armor = armor.id
+          this.log(`${enemy.name}の宝箱から ${armor.name}を 手に入れた。`)
+          this.log(`${armor.name}を 身につけた。`)
+        } else {
+          this.log(`${enemy.name}の宝箱には ${armor.name}が あったが、今の防具のほうが強い。`)
+        }
+      }
+    }
+  }
+
   finishBattleVictory() {
     const enemy = this.state.enemy
     if (!enemy) return
 
     this.log(`${enemy.name}を たおした。`)
+
+    if (FIELD_BOSS_LOOKUP[enemy.key]) {
+      this.state.progress.fieldBosses[enemy.key] = true
+      this.grantBossReward(enemy)
+    }
 
     if (enemy.key === "golem") {
       this.state.progress.caveCleared = true
@@ -1126,7 +1360,7 @@ class DragonQuestGame {
     const weapon = WEAPON_LOOKUP[id]
     if (!weapon) return
 
-    if (WEAPONS.findIndex((item) => item.id === this.state.player.weapon) >= WEAPONS.findIndex((item) => item.id === id)) {
+    if (this.weaponRank(this.state.player.weapon) >= this.weaponRank(id)) {
       this.log("今の武器のほうが同等以上だ。")
       return
     }
@@ -1145,7 +1379,7 @@ class DragonQuestGame {
     const armor = ARMOR_LOOKUP[id]
     if (!armor) return
 
-    if (ARMORS.findIndex((item) => item.id === this.state.player.armor) >= ARMORS.findIndex((item) => item.id === id)) {
+    if (this.armorRank(this.state.player.armor) >= this.armorRank(id)) {
       this.log("今の防具のほうが同等以上だ。")
       return
     }
@@ -1228,9 +1462,11 @@ class DragonQuestGame {
           const worldX = startX + columnIndex
           const worldY = startY + rowIndex
           const tile = TILE_INFO[tileCode]
+          const boss = this.fieldBossAt(worldX, worldY)
           const current = worldX === this.state.player.x && worldY === this.state.player.y
           const classes = ["map-tile", `terrain-${tile.terrain}`]
           if (current) classes.push("is-player")
+          if (boss) classes.push("is-boss")
           const styleVars = [
             `--seam-top:${this.seamValue(worldX, worldY, worldX, worldY - 1)}`,
             `--seam-right:${this.seamValue(worldX, worldY, worldX + 1, worldY)}`,
@@ -1238,9 +1474,12 @@ class DragonQuestGame {
             `--seam-left:${this.seamValue(worldX, worldY, worldX - 1, worldY)}`,
             ...this.tileVisualStyle(worldX, worldY, tile.terrain)
           ].join(";")
+          const label = boss ? `${tile.name}。${boss.name}が 待ち構えている。` : tile.name
+          const ariaLabel = current ? `勇者がいる ${label}` : label
 
           return `
-            <div class="${classes.join(" ")}" style="${styleVars}" title="${tile.name}" aria-label="${current ? `勇者がいる ${tile.name}` : tile.name}">
+            <div class="${classes.join(" ")}" style="${styleVars}" title="${boss ? `${tile.name} / ${boss.name}` : tile.name}" aria-label="${ariaLabel}">
+              ${boss ? '<span class="boss-marker" aria-hidden="true">B</span>' : ""}
               ${current ? '<span class="player-marker" aria-hidden="true"></span>' : ""}
             </div>
           `
@@ -1252,6 +1491,8 @@ class DragonQuestGame {
   }
 
   renderStats() {
+    if (!this.statsElement) return
+
     const profile = this.playerProfile()
     const weapon = WEAPON_LOOKUP[this.state.player.weapon]
     const armor = ARMOR_LOOKUP[this.state.player.armor]
@@ -1279,6 +1520,8 @@ class DragonQuestGame {
   }
 
   renderObjectives() {
+    if (!this.objectivesElement) return
+
     const objectives = [
       {
         complete: this.state.progress.caveCleared,
@@ -1299,36 +1542,101 @@ class DragonQuestGame {
       .join("")
   }
 
+  renderHero() {
+    if (!this.heroElement) return
+
+    const profile = this.playerProfile()
+    const weapon = WEAPON_LOOKUP[this.state.player.weapon]
+    const armor = ARMOR_LOOKUP[this.state.player.armor]
+
+    this.heroElement.innerHTML = `
+      <div class="hero-card">
+        <div class="hero-card-heading">
+          <p class="panel-label">HERO</p>
+          <p class="hero-level">Lv ${this.state.player.level}</p>
+        </div>
+        <div class="hero-stage">
+          <div class="hero-sprite armor-${armor.id} weapon-${weapon.id}" aria-label="勇者">
+            <span class="hero-shadow" aria-hidden="true"></span>
+            <span class="hero-cape" aria-hidden="true"></span>
+            <span class="hero-legs" aria-hidden="true"></span>
+            <span class="hero-body" aria-hidden="true"></span>
+            <span class="hero-head" aria-hidden="true"></span>
+            <span class="hero-hair" aria-hidden="true"></span>
+            <span class="hero-weapon" aria-hidden="true"></span>
+          </div>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>HP</dt><dd>${this.state.player.hp} / ${profile.maxHp}</dd></div>
+          <div><dt>MP</dt><dd>${this.state.player.mp} / ${profile.maxMp}</dd></div>
+          <div><dt>G</dt><dd>${this.state.player.gold}</dd></div>
+          <div><dt>薬草</dt><dd>${this.state.player.herbs}</dd></div>
+        </dl>
+        <div class="hero-loadout">
+          <p>武器: ${weapon.name}</p>
+          <p>防具: ${armor.name}</p>
+          <p>状態: ${this.state.player.poisoned ? "どく" : "正常"}</p>
+        </div>
+      </div>
+    `
+  }
+
   renderEnemy() {
+    const hasOverlayContent = this.state.mode === "victory" || (this.state.mode === "battle" && this.state.enemy)
+    const showBattleUi = this.state.mode === "battle" && this.state.enemy
+
+    this.battleOverlayElement.hidden = !hasOverlayContent
+    this.battleOverlayElement.classList.toggle("is-active", hasOverlayContent)
+    this.battleOverlayElement.setAttribute("aria-hidden", String(!hasOverlayContent))
+    this.battleUiElement.hidden = !showBattleUi
+
     if (this.state.mode === "victory") {
+      this.battleStatusElement.innerHTML = ""
       this.enemyElement.innerHTML = `
-        <div class="enemy-card victory-card">
-          <p class="enemy-name">CLEAR</p>
-          <p class="enemy-description">りゅうおうは倒れ、世界に光が戻った。</p>
-          <p class="enemy-description">さらに遊ぶ場合は、新しい冒険を始めてください。</p>
+        <div class="battle-screen">
+          <p class="panel-label">CLEAR</p>
+          <div class="enemy-card victory-card">
+            <p class="enemy-name">CLEAR</p>
+            <p class="enemy-description">りゅうおうは倒れ、世界に光が戻った。</p>
+            <p class="enemy-description">さらに遊ぶ場合は、新しい冒険を始めてください。</p>
+          </div>
         </div>
       `
       return
     }
 
     if (!this.state.enemy) {
-      this.enemyElement.innerHTML = `
-        <div class="enemy-card">
-          <p class="enemy-name">平穏</p>
-          <p class="enemy-description">今は敵の気配がない。地形に応じて遭遇率が変わる。</p>
-          <p class="enemy-description">森と沼地は危険だが、町と城では安全に準備できる。</p>
-        </div>
-      `
+      this.battleStatusElement.innerHTML = ""
+      this.enemyElement.innerHTML = ""
       return
     }
 
+    this.enemyElement.innerHTML = ""
+    this.battleStatusElement.innerHTML = `
+      <div class="battle-status-card ${this.state.enemy.boss ? "boss-status-card" : ""}">
+        <div class="battle-status-header">
+          <p class="enemy-name">${this.state.enemy.name}</p>
+          <p class="battle-status-copy">${this.state.enemy.boss ? "ボス戦" : "通常戦闘"}</p>
+        </div>
+        <dl class="battle-status-grid">
+          <div><dt>勇者HP</dt><dd>${this.state.player.hp} / ${this.playerProfile().maxHp}</dd></div>
+          <div><dt>勇者MP</dt><dd>${this.state.player.mp} / ${this.playerProfile().maxMp}</dd></div>
+          <div><dt>やくそう</dt><dd>${this.state.player.herbs}</dd></div>
+          <div><dt>状態</dt><dd>${this.state.player.poisoned ? "どく" : "正常"}</dd></div>
+        </dl>
+      </div>
+    `
+
+    const enemyImagePath = ENEMY_IMAGE_PATHS[this.state.enemy.key]
+
+    if (!enemyImagePath) return
+
     this.enemyElement.innerHTML = `
-      <div class="enemy-card ${this.state.enemy.boss ? "boss-card" : ""}">
-        <p class="enemy-name">${this.state.enemy.name}</p>
-        <p class="enemy-description">HP ${this.state.enemy.hp} / ${this.state.enemy.maxHp}</p>
-        <p class="enemy-description">攻撃 ${this.state.enemy.attack} / 守備 ${this.state.enemy.defense}</p>
-        <p class="enemy-description">${this.state.enemy.boss ? "ボス戦: にげるは使えない" : "通常戦闘"}</p>
-        <p class="enemy-description">${this.state.player.poisoned ? "こちらは どく状態" : "状態異常なし"}</p>
+      <div class="battle-screen enemy-portrait-card">
+        <p class="panel-label">ENEMY</p>
+        <div class="enemy-portrait-frame ${this.state.enemy.boss ? "boss-card" : ""}">
+          <img class="enemy-portrait" src="${enemyImagePath}" alt="${this.state.enemy.name}" loading="lazy" decoding="async">
+        </div>
       </div>
     `
   }
@@ -1351,7 +1659,7 @@ class DragonQuestGame {
 
     if (this.currentTileCode() !== "T" || this.state.mode === "battle") {
       this.contextElement.innerHTML = `
-        <p class="context-copy">町に入ると宿屋と装備屋が使える。城では無料回復、平地では「しらべる」で小さな発見がある。</p>
+        <p class="context-copy">町に入ると宿屋と装備屋が使える。地図上の赤いBは固定ボスで、倒すと強い装備が手に入る。</p>
       `
       return
     }
@@ -1359,13 +1667,14 @@ class DragonQuestGame {
     this.contextElement.innerHTML = `
       <div class="shop-panel">
         <p class="panel-label">TOWN MENU</p>
+        <p class="context-copy">所持金: ${this.state.player.gold}G</p>
         <div class="shop-buttons">
           <button class="shop-button" data-town-action="rest" type="button">宿屋 8G</button>
           <button class="shop-button" data-town-action="herb" type="button">やくそう 8G</button>
-          ${WEAPONS.filter((item) => item.price > 0)
+          ${WEAPONS.filter((item) => item.price > 0 && item.shop !== false)
             .map((item) => `<button class="shop-button" data-town-action="weapon:${item.id}" type="button">${item.name} ${item.price}G</button>`)
             .join("")}
-          ${ARMORS.filter((item) => item.price > 0)
+          ${ARMORS.filter((item) => item.price > 0 && item.shop !== false)
             .map((item) => `<button class="shop-button" data-town-action="armor:${item.id}" type="button">${item.name} ${item.price}G</button>`)
             .join("")}
         </div>
@@ -1374,7 +1683,9 @@ class DragonQuestGame {
   }
 
   renderLog() {
-    this.logElement.innerHTML = this.state.logs.map((entry) => `<li>${entry}</li>`).join("")
+    const entries = this.state.logs.map((entry) => `<li>${entry}</li>`).join("")
+    if (this.logElement) this.logElement.innerHTML = entries
+    if (this.battleLogElement) this.battleLogElement.innerHTML = entries
   }
 
   renderButtons() {
@@ -1403,10 +1714,12 @@ class DragonQuestGame {
   }
 
   render() {
+    this.root.dataset.mode = this.state.mode
     this.renderHeader()
     this.renderMap()
     this.renderStats()
     this.renderObjectives()
+    this.renderHero()
     this.renderEnemy()
     this.renderContext()
     this.renderLog()

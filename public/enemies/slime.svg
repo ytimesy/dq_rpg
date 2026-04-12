@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Slime</title>
+  <defs>
+    <linearGradient id="body" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8de4ff"/>
+      <stop offset="100%" stop-color="#1e74d8"/>
+    </linearGradient>
+  </defs>
+  <path d="M110 22c25 31 62 58 62 103 0 35-27 63-62 63s-62-28-62-63c0-45 37-72 62-103Z" fill="url(#body)" stroke="#d9f6ff" stroke-width="8"/>
+  <ellipse cx="84" cy="102" rx="11" ry="16" fill="#fff"/>
+  <ellipse cx="136" cy="102" rx="11" ry="16" fill="#fff"/>
+  <circle cx="84" cy="106" r="5" fill="#15203d"/>
+  <circle cx="136" cy="106" r="5" fill="#15203d"/>
+  <path d="M77 138c10 11 56 11 66 0" fill="none" stroke="#15203d" stroke-linecap="round" stroke-width="8"/>
+</svg>

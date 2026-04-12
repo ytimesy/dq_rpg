@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Skeleton</title>
+  <g fill="#f4f4f0" stroke="#8f9199" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="110" cy="72" r="28"/>
+    <path d="M110 100v70"/>
+    <path d="M78 126h64"/>
+    <path d="m78 126-20 28m84-28 20 28"/>
+    <path d="m110 170-20 30m20-30 20 30"/>
+  </g>
+  <circle cx="98" cy="68" r="7" fill="#101826"/>
+  <circle cx="122" cy="68" r="7" fill="#101826"/>
+  <path d="M98 88c6 4 18 4 24 0" fill="none" stroke="#101826" stroke-linecap="round" stroke-width="6"/>
+</svg>

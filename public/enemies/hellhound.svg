@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Hellhound</title>
+  <g fill="#7b1827" stroke="#ffd4d9" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M50 138c0-34 26-60 60-60s60 26 60 60c0 18-18 32-60 32s-60-14-60-32Z"/>
+    <path d="m84 84-16-36 30 20"/>
+    <path d="m138 84 16-36-30 20"/>
+  </g>
+  <path d="M132 124h34l-22 18" fill="#ffb44f" stroke="#fff0c7" stroke-linejoin="round" stroke-width="7"/>
+  <circle cx="92" cy="114" r="7" fill="#fff1b8"/>
+  <circle cx="118" cy="114" r="7" fill="#fff1b8"/>
+  <circle cx="92" cy="114" r="3" fill="#23030a"/>
+  <circle cx="118" cy="114" r="3" fill="#23030a"/>
+</svg>

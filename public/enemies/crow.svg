@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title">
+  <title>Crow</title>
+  <g fill="#1e2438" stroke="#d7e0ff" stroke-width="8" stroke-linejoin="round">
+    <path d="M52 118c0-35 25-60 58-60s58 25 58 60c0 27-18 46-58 46s-58-19-58-46Z"/>
+    <path d="m76 94-36-26-10 42 34 4"/>
+    <path d="m144 94 36-26 10 42-34 4"/>
+  </g>
+  <path d="M142 112h38l-26 20" fill="#f2b851" stroke="#fff0c6" stroke-linejoin="round" stroke-width="8"/>
+  <circle cx="92" cy="106" r="7" fill="#fff"/>
+  <circle cx="92" cy="106" r="3" fill="#111827"/>
+</svg>
