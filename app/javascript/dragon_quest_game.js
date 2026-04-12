@@ -1,10 +1,146 @@
 const SAVE_KEY = "dq-rpg-save-v1"
+const AUDIO_PREF_KEY = "dq-rpg-audio-v1"
 
 const SPELLS = {
   heal: { id: "heal", name: "ホイミ", mpCost: 3, unlockLevel: 1, kind: "heal", min: 12, max: 18 },
   fire: { id: "fire", name: "ギラ", mpCost: 4, unlockLevel: 2, kind: "damage", min: 9, max: 15 },
   healmore: { id: "healmore", name: "ベホイミ", mpCost: 7, unlockLevel: 5, kind: "heal", min: 24, max: 34 },
   firemore: { id: "firemore", name: "ベギラマ", mpCost: 8, unlockLevel: 6, kind: "damage", min: 18, max: 28 }
+}
+
+const NOTE_OFFSETS = {
+  C: 0,
+  "C#": 1,
+  Db: 1,
+  D: 2,
+  "D#": 3,
+  Eb: 3,
+  E: 4,
+  F: 5,
+  "F#": 6,
+  Gb: 6,
+  G: 7,
+  "G#": 8,
+  Ab: 8,
+  A: 9,
+  "A#": 10,
+  Bb: 10,
+  B: 11
+}
+
+const SOUNDTRACKS = {
+  explore: {
+    tempo: 108,
+    stepsPerBeat: 2,
+    length: 16,
+    masterGain: 0.16,
+    voices: [
+      {
+        wave: "triangle",
+        gain: 0.084,
+        gate: 0.9,
+        pan: -0.1,
+        steps: ["E4", "G4", "A4", "B4", "A4", "G4", "E4", "D4", "E4", "G4", "B4", "D5", "B4", "A4", "G4", "E4"]
+      },
+      {
+        wave: "square",
+        gain: 0.05,
+        gate: 0.74,
+        pan: 0.15,
+        steps: [["E3", "B3"], "R", ["C3", "G3"], "R", ["A2", "E3"], "R", ["B2", "F#3"], "R", ["E3", "B3"], "R", ["G3", "D4"], "R", ["A2", "E3"], "R", ["B2", "F#3"], "R"]
+      },
+      {
+        wave: "sine",
+        gain: 0.04,
+        gate: 0.6,
+        steps: ["E2", "R", "E2", "R", "C2", "R", "D2", "R", "E2", "R", "G2", "R", "A2", "R", "B2", "R"]
+      }
+    ]
+  },
+  town: {
+    tempo: 92,
+    stepsPerBeat: 2,
+    length: 16,
+    masterGain: 0.15,
+    voices: [
+      {
+        wave: "triangle",
+        gain: 0.082,
+        gate: 0.94,
+        pan: -0.08,
+        steps: ["C5", "E5", "G5", "A5", "G5", "E5", "D5", "E5", "C5", "E5", "G5", "E5", "D5", "C5", "D5", "G4"]
+      },
+      {
+        wave: "square",
+        gain: 0.048,
+        gate: 0.78,
+        pan: 0.18,
+        steps: [["C4", "E4"], "R", ["F4", "A4"], "R", ["D4", "G4"], "R", ["G3", "B3"], "R", ["C4", "E4"], "R", ["A3", "C4"], "R", ["D4", "F4"], "R", ["G3", "B3"], "R"]
+      },
+      {
+        wave: "sine",
+        gain: 0.036,
+        gate: 0.66,
+        steps: ["C3", "R", "F2", "R", "G2", "R", "G2", "R", "C3", "R", "A2", "R", "D3", "R", "G2", "R"]
+      }
+    ]
+  },
+  battle: {
+    tempo: 132,
+    stepsPerBeat: 2,
+    length: 16,
+    masterGain: 0.17,
+    voices: [
+      {
+        wave: "square",
+        gain: 0.082,
+        gate: 0.72,
+        pan: -0.05,
+        steps: ["D4", "F4", "A4", "F4", "E4", "F4", "D4", "A3", "D4", "F4", "A4", "A#4", "A4", "F4", "E4", "D4"]
+      },
+      {
+        wave: "sawtooth",
+        gain: 0.038,
+        gate: 0.62,
+        pan: 0.12,
+        steps: [["D3", "A3"], "R", ["D3", "A3"], "R", ["C3", "G3"], "R", ["A#2", "F3"], "R", ["D3", "A3"], "R", ["F3", "C4"], "R", ["G3", "D4"], "R", ["A2", "E3"], "R"]
+      },
+      {
+        wave: "triangle",
+        gain: 0.045,
+        gate: 0.54,
+        steps: ["D2", "D2", "D2", "D2", "C2", "C2", "A#1", "A#1", "D2", "D2", "F2", "F2", "G2", "G2", "A2", "A2"]
+      }
+    ]
+  },
+  victory: {
+    tempo: 104,
+    stepsPerBeat: 2,
+    length: 16,
+    masterGain: 0.16,
+    voices: [
+      {
+        wave: "triangle",
+        gain: 0.09,
+        gate: 0.96,
+        pan: -0.04,
+        steps: ["C5", "E5", "G5", "C6", "B5", "G5", "E5", "G5", "A5", "G5", "F5", "E5", "D5", "G5", "C6", "R"]
+      },
+      {
+        wave: "square",
+        gain: 0.05,
+        gate: 0.76,
+        pan: 0.16,
+        steps: [["C4", "G4"], "R", ["C4", "G4"], "R", ["E4", "G4"], "R", ["F4", "A4"], "R", ["D4", "G4"], "R", ["C4", "G4"], "R", ["G3", "D4"], "R", ["C4", "G4"], "R"]
+      },
+      {
+        wave: "sine",
+        gain: 0.038,
+        gate: 0.68,
+        steps: ["C3", "R", "C3", "R", "E3", "R", "F3", "R", "D3", "R", "C3", "R", "G2", "R", "C3", "R"]
+      }
+    ]
+  }
 }
 
 const WORLD_MAP = [
@@ -375,6 +511,39 @@ function chooseRandom(list) {
   return list[randomInt(0, list.length - 1)]
 }
 
+function noteToFrequency(note) {
+  if (!note || note === "R") return null
+
+  const match = /^([A-G])([#b]?)(\d)$/.exec(note)
+  if (!match) return null
+
+  const [, letter, accidental, octaveText] = match
+  const pitchClass = `${letter}${accidental}`
+  const midi = (Number(octaveText) + 1) * 12 + NOTE_OFFSETS[pitchClass]
+
+  return 440 * Math.pow(2, (midi - 69) / 12)
+}
+
+function normalizeStep(step) {
+  if (!step || step === "R") {
+    return { notes: [], length: 1, accent: 1 }
+  }
+
+  if (typeof step === "string") {
+    return { notes: [step], length: 1, accent: 1 }
+  }
+
+  if (Array.isArray(step)) {
+    return { notes: step, length: 1, accent: 1 }
+  }
+
+  return {
+    notes: Array.isArray(step.notes) ? step.notes : [step.notes].filter(Boolean),
+    length: Math.max(1, Number(step.length) || 1),
+    accent: Number(step.accent) || 1
+  }
+}
+
 function cloneEnemy(enemy) {
   return {
     ...enemy,
@@ -489,6 +658,269 @@ function loadState() {
   }
 }
 
+class RetroMusicDirector {
+  constructor({ button, statusElement }) {
+    this.button = button
+    this.statusElement = statusElement
+    this.enabled = this.loadPreference()
+    this.started = false
+    this.scene = "explore"
+    this.currentTrackId = null
+    this.stepIndex = 0
+    this.stepTimer = null
+    this.audioContext = null
+    this.masterGain = null
+    this.available = Boolean(window.AudioContext || window.webkitAudioContext)
+    this.render()
+  }
+
+  loadPreference() {
+    try {
+      const stored = window.localStorage.getItem(AUDIO_PREF_KEY)
+      return stored == null ? true : stored === "on"
+    } catch (_error) {
+      return true
+    }
+  }
+
+  persistPreference() {
+    try {
+      window.localStorage.setItem(AUDIO_PREF_KEY, this.enabled ? "on" : "off")
+    } catch (_error) {
+      // ignore storage failures
+    }
+  }
+
+  ensureContext() {
+    if (!this.available) return false
+    if (this.audioContext) return true
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext
+    if (!AudioContextClass) {
+      this.available = false
+      return false
+    }
+
+    this.audioContext = new AudioContextClass()
+    this.masterGain = this.audioContext.createGain()
+    this.masterGain.gain.value = 0.0001
+    this.masterGain.connect(this.audioContext.destination)
+    return true
+  }
+
+  unlock() {
+    if (!this.enabled || !this.available) {
+      this.render()
+      return
+    }
+
+    if (!this.ensureContext()) {
+      this.render()
+      return
+    }
+
+    const resumePromise = this.audioContext.state === "running" ? Promise.resolve() : this.audioContext.resume()
+    Promise.resolve(resumePromise)
+      .then(() => {
+        this.started = true
+        this.refreshPlayback()
+        this.render()
+      })
+      .catch(() => {
+        this.render()
+      })
+  }
+
+  toggle() {
+    if (!this.available) {
+      this.render()
+      return
+    }
+
+    this.enabled = !this.enabled
+    this.persistPreference()
+
+    if (!this.enabled) {
+      this.started = false
+      this.stopPlayback()
+      if (this.audioContext && this.audioContext.state === "running") {
+        this.audioContext.suspend().catch(() => {})
+      }
+      this.render()
+      return
+    }
+
+    this.render()
+    this.unlock()
+  }
+
+  currentSceneLabel() {
+    switch (this.scene) {
+      case "battle":
+        return "戦闘"
+      case "town":
+        return "町"
+      case "victory":
+        return "クリア"
+      default:
+        return "フィールド"
+    }
+  }
+
+  sceneFor(state, tileCode) {
+    if (state.mode === "victory") return "victory"
+    if (state.mode === "battle") return "battle"
+    if (tileCode === "T" || tileCode === "C") return "town"
+    return "explore"
+  }
+
+  update(state, tileCode) {
+    this.scene = this.sceneFor(state, tileCode)
+    this.refreshPlayback()
+    this.render()
+  }
+
+  refreshPlayback() {
+    if (!this.enabled || !this.started || !this.audioContext || this.audioContext.state !== "running") {
+      this.stopPlayback()
+      return
+    }
+
+    if (this.currentTrackId !== this.scene) {
+      this.startTrack(this.scene)
+      return
+    }
+
+    if (!this.stepTimer) {
+      this.scheduleNextStep()
+    }
+  }
+
+  stepDuration(track) {
+    return 60 / track.tempo / (track.stepsPerBeat || 2)
+  }
+
+  startTrack(trackId) {
+    const track = SOUNDTRACKS[trackId]
+    if (!track || !this.audioContext || !this.masterGain) return
+
+    this.stopPlayback()
+    this.currentTrackId = trackId
+    this.stepIndex = 0
+
+    const now = this.audioContext.currentTime
+    this.masterGain.gain.cancelScheduledValues(now)
+    this.masterGain.gain.setTargetAtTime(track.masterGain || 0.16, now, 0.08)
+
+    this.scheduleNextStep()
+  }
+
+  stopPlayback() {
+    if (this.stepTimer) {
+      window.clearTimeout(this.stepTimer)
+      this.stepTimer = null
+    }
+
+    if (this.audioContext && this.masterGain) {
+      const now = this.audioContext.currentTime
+      this.masterGain.gain.cancelScheduledValues(now)
+      this.masterGain.gain.setTargetAtTime(0.0001, now, 0.06)
+    }
+
+    this.currentTrackId = null
+    this.stepIndex = 0
+  }
+
+  scheduleNextStep() {
+    const track = SOUNDTRACKS[this.currentTrackId]
+    if (!track || !this.audioContext || this.audioContext.state !== "running") return
+
+    this.playStep(track, this.stepIndex)
+    this.stepIndex = (this.stepIndex + 1) % track.length
+    this.stepTimer = window.setTimeout(() => this.scheduleNextStep(), this.stepDuration(track) * 1000)
+  }
+
+  playStep(track, stepIndex) {
+    track.voices.forEach((voice) => {
+      const step = normalizeStep(voice.steps[stepIndex % voice.steps.length])
+      if (step.notes.length === 0) return
+
+      const duration = this.stepDuration(track) * step.length * (voice.gate || 0.84)
+      step.notes.forEach((note) => {
+        const frequency = noteToFrequency(note)
+        if (frequency) this.triggerTone(frequency, duration, voice, step.accent)
+      })
+    })
+  }
+
+  triggerTone(frequency, duration, voice, accent = 1) {
+    if (!this.audioContext || !this.masterGain) return
+
+    const now = this.audioContext.currentTime
+    const oscillator = this.audioContext.createOscillator()
+    const noteGain = this.audioContext.createGain()
+    const peakGain = Math.max(0.0001, (voice.gain || 0.06) * accent)
+
+    oscillator.type = voice.wave || "square"
+    oscillator.frequency.setValueAtTime(frequency, now)
+    if (voice.detune) oscillator.detune.setValueAtTime(voice.detune, now)
+
+    noteGain.gain.setValueAtTime(0.0001, now)
+    noteGain.gain.exponentialRampToValueAtTime(peakGain, now + Math.min(0.03, duration * 0.25))
+    noteGain.gain.exponentialRampToValueAtTime(Math.max(0.0001, peakGain * 0.48), now + Math.max(0.05, duration * 0.6))
+    noteGain.gain.exponentialRampToValueAtTime(0.0001, now + Math.max(0.07, duration))
+
+    oscillator.connect(noteGain)
+
+    if (typeof this.audioContext.createStereoPanner === "function") {
+      const panner = this.audioContext.createStereoPanner()
+      panner.pan.value = voice.pan || 0
+      noteGain.connect(panner)
+      panner.connect(this.masterGain)
+    } else {
+      noteGain.connect(this.masterGain)
+    }
+
+    oscillator.start(now)
+    oscillator.stop(now + Math.max(0.08, duration) + 0.05)
+  }
+
+  render() {
+    if (!this.button || !this.statusElement) return
+
+    this.button.textContent = this.enabled ? "BGM ON" : "BGM OFF"
+    this.button.setAttribute("aria-pressed", String(this.enabled))
+
+    if (!this.available) {
+      this.statusElement.textContent = "このブラウザではBGMを再生できません。"
+      return
+    }
+
+    if (!this.enabled) {
+      this.statusElement.textContent = "BGMは停止中です。ボタンで再開できます。"
+      return
+    }
+
+    if (!this.started) {
+      this.statusElement.textContent = "最初の移動かボタン操作でBGMを開始します。"
+      return
+    }
+
+    this.statusElement.textContent = `${this.currentSceneLabel()}のオリジナルBGMを再生中です。`
+  }
+
+  destroy() {
+    this.stopPlayback()
+
+    if (this.audioContext) {
+      const context = this.audioContext
+      this.audioContext = null
+      this.masterGain = null
+      context.close().catch(() => {})
+    }
+  }
+}
+
 class DragonQuestGame {
   constructor(root) {
     this.root = root
@@ -509,6 +941,12 @@ class DragonQuestGame {
     this.actionButton = root.querySelector("#dq-action-button")
     this.attackSpellButton = root.querySelector("#dq-attack-spell-button")
     this.healSpellButton = root.querySelector("#dq-heal-spell-button")
+    this.audioToggleButton = root.querySelector("#dq-audio-toggle")
+    this.audioStatusElement = root.querySelector("#dq-audio-status")
+    this.musicDirector = new RetroMusicDirector({
+      button: this.audioToggleButton,
+      statusElement: this.audioStatusElement
+    })
     this.pressedDirections = new Set()
     this.activeHeldDirection = null
     this.moveInterval = null
@@ -529,6 +967,7 @@ class DragonQuestGame {
     window.removeEventListener("keydown", this.handleKeydown)
     window.removeEventListener("keyup", this.handleKeyup)
     this.stopHeldMove()
+    this.musicDirector?.destroy()
   }
 
   playerProfile() {
@@ -669,8 +1108,15 @@ class DragonQuestGame {
   }
 
   handleClick(event) {
-    const button = event.target.closest("button[data-command], button[data-town-action]")
+    const button = event.target.closest("button[data-command], button[data-town-action], button[data-audio-command]")
     if (!button) return
+
+    if (button.dataset.audioCommand === "toggle") {
+      this.musicDirector.toggle()
+      return
+    }
+
+    this.musicDirector.unlock()
 
     if (button.dataset.command) {
       this.handleCommand(button.dataset.command, button.dataset.direction)
@@ -683,6 +1129,10 @@ class DragonQuestGame {
   handleKeydown(event) {
     if (!this.root.isConnected) return
     const direction = this.directionFromKey(event.key)
+
+    if (direction || event.key === " " || event.key === "Enter") {
+      this.musicDirector.unlock()
+    }
 
     if (direction) {
       event.preventDefault()
@@ -1724,6 +2174,7 @@ class DragonQuestGame {
     this.renderContext()
     this.renderLog()
     this.renderButtons()
+    this.musicDirector.update(this.state, this.currentTileCode())
     this.persist()
   }
 }
