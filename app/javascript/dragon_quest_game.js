@@ -1,28 +1,48 @@
 const SAVE_KEY = "dq-rpg-save-v1"
-const HEAL_SPELL_COST = 3
+
+const SPELLS = {
+  heal: { id: "heal", name: "ホイミ", mpCost: 3, unlockLevel: 1, kind: "heal", min: 12, max: 18 },
+  fire: { id: "fire", name: "ギラ", mpCost: 4, unlockLevel: 2, kind: "damage", min: 9, max: 15 },
+  healmore: { id: "healmore", name: "ベホイミ", mpCost: 7, unlockLevel: 5, kind: "heal", min: 24, max: 34 },
+  firemore: { id: "firemore", name: "ベギラマ", mpCost: 8, unlockLevel: 6, kind: "damage", min: 18, max: 28 }
+}
 
 const WORLD_MAP = [
-  "MMMMMMMMMM",
-  "MCPPPFPPDM",
-  "MPMMPFMPPM",
-  "MPPPPFMPPM",
-  "MPFTPPPPPM",
-  "MPPSSMFPPM",
-  "MPPMMMFPPM",
-  "MPPHPPPPPM",
-  "MPPPPPPPPM",
-  "MMMMMMMMMM"
+  "MMMM MMMM MMMM MMMM MMMM MMMM".replaceAll(" ", ""),
+  "MCPP PPFP PPPP PMMM MPPP PDMM".replaceAll(" ", ""),
+  "MPPP PFFP PMPP PMMM MPPP PPMM".replaceAll(" ", ""),
+  "MPMM PPPP PMPP PPPP PFFF PPMM".replaceAll(" ", ""),
+  "MPMM MPPP PMMM PPPP PFFF PPMM".replaceAll(" ", ""),
+  "MPPP PTPP PSSP PPPP PPPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PSSP PFFF PMMM PPMM".replaceAll(" ", ""),
+  "MPPP PFFF PPPP PFFF PMMM PPMM".replaceAll(" ", ""),
+  "MPPP PFFF PPPP PPPP PPPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PMMM MMMP PPMM".replaceAll(" ", ""),
+  "MPMM MPPP PPPP PMPP PPPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PMPP PMPP PPPF PPMM".replaceAll(" ", ""),
+  "MPPP PMMM PMPP PMPP PPPF PPMM".replaceAll(" ", ""),
+  "MPPP PMPP PMPP PMPP PFFF PPMM".replaceAll(" ", ""),
+  "MPPP PMPP PMPP PPPP PFFF PHMM".replaceAll(" ", ""),
+  "MPPP PMPP PMMM MMMP PPPP PPMM".replaceAll(" ", ""),
+  "MPPP PTPP PPPP PPPP PSSP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PFFF PPPP PSSP PPMM".replaceAll(" ", ""),
+  "MPMM MPPP PFFF PMMM MMPP PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PMPP PPPP PPMM".replaceAll(" ", ""),
+  "MPPP FFFF PPPP PMPP PFFF PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PPPP PFFF PPMM".replaceAll(" ", ""),
+  "MPPP PPPP PPPP PPPP PPPP PPMM".replaceAll(" ", ""),
+  "MMMM MMMM MMMM MMMM MMMM MMMM".replaceAll(" ", "")
 ]
 
 const TILE_INFO = {
-  C: { name: "ラダトーム城", symbol: "城", safe: true, terrain: "castle" },
-  D: { name: "竜王の城", symbol: "竜", safe: true, terrain: "dragon" },
-  F: { name: "森", symbol: "森", safe: false, terrain: "forest" },
-  H: { name: "岩山の洞窟", symbol: "洞", safe: true, terrain: "cave" },
-  M: { name: "山", symbol: "山", safe: true, terrain: "mountain", blocked: true },
-  P: { name: "平原", symbol: "・", safe: false, terrain: "plain" },
-  S: { name: "沼地", symbol: "沼", safe: false, terrain: "swamp" },
-  T: { name: "町", symbol: "町", safe: true, terrain: "town" }
+  C: { name: "ラダトーム城", safe: true, terrain: "castle" },
+  D: { name: "竜王の城", safe: true, terrain: "dragon" },
+  F: { name: "森", safe: false, terrain: "forest" },
+  H: { name: "岩山の洞窟", safe: true, terrain: "cave" },
+  M: { name: "山", safe: true, terrain: "mountain", blocked: true },
+  P: { name: "平原", safe: false, terrain: "plain" },
+  S: { name: "沼地", safe: false, terrain: "swamp" },
+  T: { name: "町", safe: true, terrain: "town" }
 }
 
 const LEVEL_TABLE = [
@@ -53,22 +73,108 @@ const ARMORS = [
 
 const ENEMIES = {
   low: [
-    { key: "slime", name: "スライム", maxHp: 6, attack: 4, defense: 1, xp: 2, gold: 3 },
-    { key: "drakee", name: "ドラキー", maxHp: 8, attack: 5, defense: 2, xp: 4, gold: 4 }
+    { key: "slime", name: "スライム", maxHp: 6, attack: 4, defense: 1, xp: 2, gold: 3, missChance: 0.12 },
+    {
+      key: "drakee",
+      name: "ドラキー",
+      maxHp: 8,
+      attack: 5,
+      defense: 2,
+      xp: 4,
+      gold: 4,
+      actions: [
+        { type: "heavy", chance: 0.28, min: 6, max: 9, message: "ドラキーは くうちゅうから つめを たてた。" }
+      ]
+    }
   ],
   mid: [
-    { key: "ghost", name: "ゴースト", maxHp: 14, attack: 8, defense: 3, xp: 8, gold: 7 },
-    { key: "magician", name: "まほうつかい", maxHp: 16, attack: 9, defense: 4, xp: 10, gold: 10 }
+    {
+      key: "ghost",
+      name: "ゴースト",
+      maxHp: 14,
+      attack: 8,
+      defense: 3,
+      xp: 8,
+      gold: 7,
+      evadeChance: 0.14,
+      actions: [
+        { type: "drain", chance: 0.25, min: 4, max: 7, message: "ゴーストは いのちを すいとった。" }
+      ]
+    },
+    {
+      key: "magician",
+      name: "まほうつかい",
+      maxHp: 16,
+      attack: 9,
+      defense: 4,
+      xp: 10,
+      gold: 10,
+      actions: [
+        { type: "spell", chance: 0.4, min: 7, max: 11, message: "まほうつかいは ギラを となえた。", ignoresGuard: true }
+      ]
+    }
   ],
   high: [
-    { key: "scorpion", name: "さそり", maxHp: 24, attack: 12, defense: 6, xp: 18, gold: 16 },
-    { key: "knight", name: "しりょうのきし", maxHp: 32, attack: 15, defense: 8, xp: 28, gold: 22 }
+    {
+      key: "scorpion",
+      name: "さそり",
+      maxHp: 24,
+      attack: 12,
+      defense: 6,
+      xp: 18,
+      gold: 16,
+      actions: [
+        { type: "poison", chance: 0.3, min: 5, max: 8, message: "さそりの どくばりが ささった。" }
+      ]
+    },
+    {
+      key: "knight",
+      name: "しりょうのきし",
+      maxHp: 32,
+      attack: 15,
+      defense: 8,
+      xp: 28,
+      gold: 22,
+      evadeChance: 0.08,
+      actions: [
+        { type: "heavy", chance: 0.28, min: 10, max: 14, message: "しりょうのきしは つよく きりつけた。" }
+      ]
+    }
   ],
-  caveBoss: { key: "golem", name: "ゴーレム", maxHp: 46, attack: 16, defense: 9, xp: 45, gold: 30, boss: true },
-  finalBoss: { key: "dragonlord", name: "りゅうおう", maxHp: 78, attack: 22, defense: 12, xp: 0, gold: 0, boss: true }
+  caveBoss: {
+    key: "golem",
+    name: "ゴーレム",
+    maxHp: 46,
+    attack: 16,
+    defense: 9,
+    xp: 45,
+    gold: 30,
+    boss: true,
+    actions: [
+      { type: "heavy", chance: 0.34, min: 11, max: 16, message: "ゴーレムは じひびきを たてて ふみつけた。" }
+    ]
+  },
+  finalBoss: {
+    key: "dragonlord",
+    name: "りゅうおう",
+    maxHp: 78,
+    attack: 22,
+    defense: 12,
+    xp: 0,
+    gold: 0,
+    boss: true,
+    magicResist: 0.3,
+    evadeChance: 0.1,
+    actions: [
+      { type: "flame", chance: 0.42, min: 15, max: 22, message: "りゅうおうは ほのおを はいた。", ignoresGuard: true },
+      { type: "spell", chance: 0.22, min: 13, max: 18, message: "りゅうおうは ベギラマを となえた。", ignoresGuard: true }
+    ]
+  }
 }
 
 const START_POSITION = { x: 1, y: 1 }
+const VIEWPORT_SIZE = 11
+const MOVE_REPEAT_MS = 120
 
 const DIRECTIONS = {
   up: { dx: 0, dy: -1 },
@@ -77,8 +183,22 @@ const DIRECTIONS = {
   right: { dx: 1, dy: 0 }
 }
 
+const TERRAIN_PHOTO_TUNING = {
+  plain: { x: 50, y: 68, spreadX: 18, spreadY: 12, scale: 1.14, brightness: 0.92, contrast: 0.9, saturate: 0.84 },
+  forest: { x: 50, y: 34, spreadX: 14, spreadY: 16, scale: 1.18, brightness: 0.88, contrast: 0.92, saturate: 0.82 },
+  swamp: { x: 50, y: 50, spreadX: 12, spreadY: 10, scale: 1.13, brightness: 0.86, contrast: 0.9, saturate: 0.78 },
+  castle: { x: 50, y: 50, spreadX: 10, spreadY: 10, scale: 1.11, brightness: 0.91, contrast: 0.94, saturate: 0.8 },
+  town: { x: 50, y: 56, spreadX: 12, spreadY: 12, scale: 1.12, brightness: 0.93, contrast: 0.9, saturate: 0.82 },
+  cave: { x: 50, y: 44, spreadX: 12, spreadY: 14, scale: 1.16, brightness: 0.82, contrast: 0.94, saturate: 0.7 },
+  dragon: { x: 50, y: 50, spreadX: 10, spreadY: 8, scale: 1.12, brightness: 0.8, contrast: 0.98, saturate: 0.82 },
+  mountain: { x: 50, y: 54, spreadX: 16, spreadY: 12, scale: 1.16, brightness: 0.9, contrast: 0.92, saturate: 0.76 }
+}
+
 const WEAPON_LOOKUP = Object.fromEntries(WEAPONS.map((item) => [item.id, item]))
 const ARMOR_LOOKUP = Object.fromEntries(ARMORS.map((item) => [item.id, item]))
+const ENEMY_LOOKUP = Object.fromEntries(
+  [...ENEMIES.low, ...ENEMIES.mid, ...ENEMIES.high, ENEMIES.caveBoss, ENEMIES.finalBoss].map((enemy) => [enemy.key, enemy])
+)
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -89,14 +209,29 @@ function chooseRandom(list) {
 }
 
 function cloneEnemy(enemy) {
-  return { ...enemy, hp: enemy.maxHp }
+  return {
+    ...enemy,
+    actions: enemy.actions ? enemy.actions.map((action) => ({ ...action })) : [],
+    hp: enemy.maxHp
+  }
+}
+
+function hydrateEnemy(enemy) {
+  if (!enemy) return null
+
+  const base = ENEMY_LOOKUP[enemy.key] || enemy
+  return {
+    ...base,
+    ...enemy,
+    actions: enemy.actions ? enemy.actions.map((action) => ({ ...action })) : (base.actions ? base.actions.map((action) => ({ ...action })) : [])
+  }
 }
 
 function createInitialState() {
   const startingProfile = LEVEL_TABLE[0]
 
   return {
-    version: 1,
+    version: 2,
     mode: "explore",
     player: {
       level: 1,
@@ -109,7 +244,9 @@ function createInitialState() {
       weapon: "none",
       armor: "cloth",
       herbs: 1,
-      hasSigil: false
+      hasSigil: false,
+      poisoned: false,
+      guarding: false
     },
     progress: {
       caveCleared: false,
@@ -127,20 +264,30 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value))
 }
 
+function tileInfoAt(x, y) {
+  const tileCode = WORLD_MAP[y]?.[x]
+  return tileCode ? TILE_INFO[tileCode] : null
+}
+
+function seededUnit(x, y, salt) {
+  const raw = Math.sin((x + 1) * 12.9898 + (y + 1) * 78.233 + salt * 37.719) * 43758.5453
+  return raw - Math.floor(raw)
+}
+
 function loadState() {
   try {
     const raw = window.localStorage.getItem(SAVE_KEY)
     if (!raw) return createInitialState()
 
     const parsed = JSON.parse(raw)
-    if (parsed?.version !== 1) return createInitialState()
+    if (![1, 2].includes(parsed?.version)) return createInitialState()
 
     const initial = createInitialState()
     const level = clamp(Number(parsed.player?.level) || 1, 1, LEVEL_TABLE.length)
     const profile = LEVEL_TABLE[level - 1]
 
     return {
-      version: 1,
+      version: 2,
       mode: ["explore", "battle", "victory"].includes(parsed.mode) ? parsed.mode : "explore",
       player: {
         level,
@@ -153,13 +300,15 @@ function loadState() {
         weapon: WEAPON_LOOKUP[parsed.player?.weapon] ? parsed.player.weapon : initial.player.weapon,
         armor: ARMOR_LOOKUP[parsed.player?.armor] ? parsed.player.armor : initial.player.armor,
         herbs: Math.max(0, Number(parsed.player?.herbs) || 0),
-        hasSigil: Boolean(parsed.player?.hasSigil)
+        hasSigil: Boolean(parsed.player?.hasSigil),
+        poisoned: Boolean(parsed.player?.poisoned),
+        guarding: Boolean(parsed.player?.guarding)
       },
       progress: {
         caveCleared: Boolean(parsed.progress?.caveCleared),
         dragonDefeated: Boolean(parsed.progress?.dragonDefeated)
       },
-      enemy: parsed.enemy ? { ...parsed.enemy } : null,
+      enemy: hydrateEnemy(parsed.enemy),
       logs: Array.isArray(parsed.logs) && parsed.logs.length > 0 ? parsed.logs.slice(0, 8) : initial.logs
     }
   } catch (_error) {
@@ -180,12 +329,19 @@ class DragonQuestGame {
     this.logElement = root.querySelector("#dq-log")
     this.contextElement = root.querySelector("#dq-context")
     this.actionButton = root.querySelector("#dq-action-button")
+    this.attackSpellButton = root.querySelector("#dq-attack-spell-button")
+    this.healSpellButton = root.querySelector("#dq-heal-spell-button")
+    this.pressedDirections = new Set()
+    this.activeHeldDirection = null
+    this.moveInterval = null
 
     this.handleClick = this.handleClick.bind(this)
     this.handleKeydown = this.handleKeydown.bind(this)
+    this.handleKeyup = this.handleKeyup.bind(this)
 
     this.root.addEventListener("click", this.handleClick)
     window.addEventListener("keydown", this.handleKeydown)
+    window.addEventListener("keyup", this.handleKeyup)
 
     this.render()
   }
@@ -193,6 +349,8 @@ class DragonQuestGame {
   destroy() {
     this.root.removeEventListener("click", this.handleClick)
     window.removeEventListener("keydown", this.handleKeydown)
+    window.removeEventListener("keyup", this.handleKeyup)
+    this.stopHeldMove()
   }
 
   playerProfile() {
@@ -207,6 +365,20 @@ class DragonQuestGame {
     return this.playerProfile().defense + ARMOR_LOOKUP[this.state.player.armor].bonus
   }
 
+  knownSpells() {
+    return Object.values(SPELLS).filter((spell) => this.state.player.level >= spell.unlockLevel)
+  }
+
+  currentHealSpell() {
+    const healingSpells = this.knownSpells().filter((spell) => spell.kind === "heal")
+    return healingSpells[healingSpells.length - 1] || null
+  }
+
+  currentAttackSpell() {
+    const attackSpells = this.knownSpells().filter((spell) => spell.kind === "damage")
+    return attackSpells[attackSpells.length - 1] || null
+  }
+
   currentTileCode() {
     return WORLD_MAP[this.state.player.y][this.state.player.x]
   }
@@ -216,8 +388,9 @@ class DragonQuestGame {
   }
 
   currentZone() {
-    if (this.state.player.x >= 7 && this.state.player.y <= 3) return "high"
-    if (this.state.player.y >= 6 || this.state.player.x >= 5) return "mid"
+    const distanceFromCastle = Math.abs(this.state.player.x - START_POSITION.x) + Math.abs(this.state.player.y - START_POSITION.y)
+    if (this.state.player.x >= 18 && this.state.player.y <= 6) return "high"
+    if (distanceFromCastle >= 14 || this.state.player.y >= 12 || this.state.player.x >= 12) return "mid"
     return "low"
   }
 
@@ -230,12 +403,62 @@ class DragonQuestGame {
     this.state.logs = this.state.logs.slice(0, 8)
   }
 
+  cureAilments() {
+    this.state.player.poisoned = false
+    this.state.player.guarding = false
+  }
+
+  playerPhysicalDamage(targetDefense) {
+    return Math.max(1, this.playerAttack() + randomInt(0, 3) - Math.floor(targetDefense / 2))
+  }
+
+  enemyPhysicalDamage(enemyAttack) {
+    return Math.max(1, enemyAttack + randomInt(0, 2) - Math.floor(this.playerDefense() / 2))
+  }
+
+  applyPlayerDamage(damage, message, options = {}) {
+    const { ignoresGuard = false, inflictPoison = false } = options
+    let finalDamage = damage
+
+    if (!ignoresGuard && this.state.player.guarding) {
+      finalDamage = Math.max(1, Math.floor(finalDamage / 2))
+      this.log("ぼうぎょして ダメージを へらした。")
+    }
+
+    this.state.player.hp = Math.max(0, this.state.player.hp - finalDamage)
+    this.log(`${message}${finalDamage} ダメージを受けた。`)
+
+    if (inflictPoison && !this.state.player.poisoned && this.state.player.hp > 0) {
+      this.state.player.poisoned = true
+      this.log("どくを うけた。")
+    }
+
+    if (this.state.player.hp <= 0) {
+      this.respawnAtCastle(`${this.state.enemy?.name || "まもの"}に敗れた。王のもとで再び目を覚ます。`)
+    }
+  }
+
+  applyFieldPoison() {
+    if (!this.state.player.poisoned || this.state.mode !== "explore") return false
+
+    this.state.player.hp = Math.max(0, this.state.player.hp - 1)
+    this.log("どくが まわった。1 ダメージを受けた。")
+
+    if (this.state.player.hp <= 0) {
+      this.respawnAtCastle("どくが まわり、王に救い出された。")
+      return true
+    }
+
+    return false
+  }
+
   saveAndRender() {
     this.persist()
     this.render()
   }
 
   resetGame() {
+    this.stopHeldMove()
     this.state = createInitialState()
     this.log("新しい冒険が始まった。")
     this.saveAndRender()
@@ -255,30 +478,27 @@ class DragonQuestGame {
 
   handleKeydown(event) {
     if (!this.root.isConnected) return
-    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "w", "a", "s", "d", "W", "A", "S", "D"].includes(event.key)) {
+    const direction = this.directionFromKey(event.key)
+
+    if (direction) {
       event.preventDefault()
+      this.pressedDirections.add(direction)
+      this.startHeldMove(direction)
     }
 
     switch (event.key) {
       case "ArrowUp":
       case "w":
       case "W":
-        this.handleCommand("move", "up")
-        break
       case "ArrowDown":
       case "s":
       case "S":
-        this.handleCommand("move", "down")
-        break
       case "ArrowLeft":
       case "a":
       case "A":
-        this.handleCommand("move", "left")
-        break
       case "ArrowRight":
       case "d":
       case "D":
-        this.handleCommand("move", "right")
         break
       case " ":
       case "Enter":
@@ -287,6 +507,67 @@ class DragonQuestGame {
       default:
         break
     }
+  }
+
+  handleKeyup(event) {
+    const direction = this.directionFromKey(event.key)
+    if (!direction) return
+
+    this.pressedDirections.delete(direction)
+
+    const remaining = Array.from(this.pressedDirections)
+    if (remaining.length === 0) {
+      this.stopHeldMove()
+    } else {
+      this.startHeldMove(remaining[remaining.length - 1])
+    }
+  }
+
+  directionFromKey(key) {
+    switch (key) {
+      case "ArrowUp":
+      case "w":
+      case "W":
+        return "up"
+      case "ArrowDown":
+      case "s":
+      case "S":
+        return "down"
+      case "ArrowLeft":
+      case "a":
+      case "A":
+        return "left"
+      case "ArrowRight":
+      case "d":
+      case "D":
+        return "right"
+      default:
+        return null
+    }
+  }
+
+  startHeldMove(direction) {
+    if (!direction) return
+
+    if (this.activeHeldDirection !== direction) {
+      this.activeHeldDirection = direction
+    }
+
+    if (this.moveInterval) return
+
+    this.handleCommand("move", direction)
+    this.moveInterval = window.setInterval(() => {
+      if (!this.activeHeldDirection) return
+      this.handleCommand("move", this.activeHeldDirection)
+    }, MOVE_REPEAT_MS)
+  }
+
+  stopHeldMove() {
+    this.activeHeldDirection = null
+    if (!this.moveInterval) return
+
+    window.clearInterval(this.moveInterval)
+    this.moveInterval = null
   }
 
   handleCommand(command, direction) {
@@ -307,7 +588,16 @@ class DragonQuestGame {
         this.attackEnemy()
         break
       case "spell":
-        this.castHeal()
+        this.castHealSpell()
+        break
+      case "attack_spell":
+        this.castAttackSpell()
+        break
+      case "heal_spell":
+        this.castHealSpell()
+        break
+      case "defend":
+        this.defend()
         break
       case "herb":
         this.useHerb()
@@ -325,6 +615,7 @@ class DragonQuestGame {
 
   move(direction) {
     if (this.state.mode === "battle") {
+      this.stopHeldMove()
       this.log("戦闘中は移動できない。")
       this.saveAndRender()
       return
@@ -343,9 +634,13 @@ class DragonQuestGame {
       return
     }
 
+    const previousTileCode = this.currentTileCode()
     this.state.player.x = nextX
     this.state.player.y = nextY
-    this.log(`${nextTile.name}へ進んだ。`)
+
+    if (previousTileCode !== WORLD_MAP[nextY][nextX]) {
+      this.logArrival(nextTile, WORLD_MAP[nextY][nextX])
+    }
 
     if (WORLD_MAP[nextY][nextX] === "S") {
       this.state.player.hp = Math.max(0, this.state.player.hp - 1)
@@ -357,8 +652,32 @@ class DragonQuestGame {
       }
     }
 
+    if (this.applyFieldPoison()) {
+      this.saveAndRender()
+      return
+    }
+
     this.maybeTriggerEncounter(nextTile)
     this.saveAndRender()
+  }
+
+  logArrival(tile, tileCode) {
+    switch (tileCode) {
+      case "C":
+        this.log("ラダトーム城へ もどった。")
+        break
+      case "T":
+        this.log("町へ たどりついた。")
+        break
+      case "H":
+        this.log("岩山の洞窟の 入口だ。")
+        break
+      case "D":
+        this.log("りゅうおうの城が 目の前にある。")
+        break
+      default:
+        break
+    }
   }
 
   maybeTriggerEncounter(tile) {
@@ -371,6 +690,7 @@ class DragonQuestGame {
     if (Math.random() >= encounterRate) return
 
     const enemy = cloneEnemy(chooseRandom(ENEMIES[this.currentZone()]))
+    this.stopHeldMove()
     this.state.mode = "battle"
     this.state.enemy = enemy
     this.log(`${enemy.name}が あらわれた。`)
@@ -407,6 +727,7 @@ class DragonQuestGame {
     const profile = this.playerProfile()
     this.state.player.hp = profile.maxHp
     this.state.player.mp = profile.maxMp
+    this.cureAilments()
     this.log("王の間で力を取り戻した。")
     this.log("王は告げた。『洞窟の守り手を倒し、紋章を奪還するのだ。』")
   }
@@ -423,6 +744,7 @@ class DragonQuestGame {
     this.state.player.gold -= cost
     this.state.player.hp = profile.maxHp
     this.state.player.mp = profile.maxMp
+    this.cureAilments()
     this.log("宿屋でゆっくり休んだ。HPとMPが全回復した。")
   }
 
@@ -451,6 +773,7 @@ class DragonQuestGame {
     }
 
     const enemy = cloneEnemy(ENEMIES.caveBoss)
+    this.stopHeldMove()
     this.state.mode = "battle"
     this.state.enemy = enemy
     this.log("洞窟の最深部で、ゴーレムが立ちはだかった。")
@@ -465,6 +788,7 @@ class DragonQuestGame {
     if (this.state.mode === "battle" && this.state.enemy?.key === "dragonlord") return
 
     const enemy = cloneEnemy(ENEMIES.finalBoss)
+    this.stopHeldMove()
     this.state.mode = "battle"
     this.state.enemy = enemy
     this.log("玉座の間で、りゅうおうが不敵に笑った。")
@@ -477,9 +801,19 @@ class DragonQuestGame {
       return
     }
 
-    const damage = Math.max(1, this.playerAttack() + randomInt(0, 3) - Math.floor(this.state.enemy.defense / 2))
+    if (this.state.enemy.evadeChance && Math.random() < this.state.enemy.evadeChance) {
+      this.log(`${this.state.enemy.name}は ひらりと みをかわした。`)
+      this.enemyTurn()
+      this.saveAndRender()
+      return
+    }
+
+    const critical = Math.random() < 0.08
+    const damage = critical
+      ? this.playerAttack() + randomInt(6, 12)
+      : this.playerPhysicalDamage(this.state.enemy.defense)
     this.state.enemy.hp = Math.max(0, this.state.enemy.hp - damage)
-    this.log(`${this.state.enemy.name}に ${damage} のダメージ。`)
+    this.log(critical ? `かいしんの いちげき。${damage} ダメージ。` : `${this.state.enemy.name}に ${damage} のダメージ。`)
 
     if (this.state.enemy.hp <= 0) {
       this.finishBattleVictory()
@@ -491,8 +825,54 @@ class DragonQuestGame {
     this.saveAndRender()
   }
 
-  castHeal() {
-    if (this.state.player.mp < HEAL_SPELL_COST) {
+  castAttackSpell() {
+    const spell = this.currentAttackSpell()
+
+    if (!spell) {
+      this.log("攻撃呪文は まだ おぼえていない。")
+      this.saveAndRender()
+      return
+    }
+
+    if (this.state.mode !== "battle" || !this.state.enemy) {
+      this.log(`${spell.name}を使う相手がいない。`)
+      this.saveAndRender()
+      return
+    }
+
+    if (this.state.player.mp < spell.mpCost) {
+      this.log("MPが足りない。")
+      this.saveAndRender()
+      return
+    }
+
+    this.state.player.mp -= spell.mpCost
+    const resist = this.state.enemy.magicResist || 0
+    const rawDamage = randomInt(spell.min, spell.max) + Math.floor(this.state.player.level / 2)
+    const damage = Math.max(1, Math.floor(rawDamage * (1 - resist)))
+    this.state.enemy.hp = Math.max(0, this.state.enemy.hp - damage)
+    this.log(`${spell.name}を となえた。${this.state.enemy.name}に ${damage} ダメージ。`)
+
+    if (this.state.enemy.hp <= 0) {
+      this.finishBattleVictory()
+      this.saveAndRender()
+      return
+    }
+
+    this.enemyTurn()
+    this.saveAndRender()
+  }
+
+  castHealSpell() {
+    const spell = this.currentHealSpell()
+
+    if (!spell) {
+      this.log("回復呪文は まだ おぼえていない。")
+      this.saveAndRender()
+      return
+    }
+
+    if (this.state.player.mp < spell.mpCost) {
       this.log("MPが足りない。")
       this.saveAndRender()
       return
@@ -504,10 +884,10 @@ class DragonQuestGame {
       return
     }
 
-    this.state.player.mp -= HEAL_SPELL_COST
-    const healAmount = randomInt(12, 18)
+    this.state.player.mp -= spell.mpCost
+    const healAmount = randomInt(spell.min, spell.max)
     this.state.player.hp = clamp(this.state.player.hp + healAmount, 0, this.playerProfile().maxHp)
-    this.log(`ホイミを唱えた。HPが ${healAmount} 回復した。`)
+    this.log(`${spell.name}を唱えた。HPが ${healAmount} 回復した。`)
 
     if (this.state.mode === "battle") {
       this.enemyTurn()
@@ -523,7 +903,7 @@ class DragonQuestGame {
       return
     }
 
-    if (this.state.player.hp >= this.playerProfile().maxHp) {
+    if (this.state.player.hp >= this.playerProfile().maxHp && !this.state.player.poisoned) {
       this.log("今は使わなくても大丈夫だ。")
       this.saveAndRender()
       return
@@ -533,6 +913,11 @@ class DragonQuestGame {
     const healAmount = randomInt(10, 16)
     this.state.player.hp = clamp(this.state.player.hp + healAmount, 0, this.playerProfile().maxHp)
     this.log(`やくそうを使った。HPが ${healAmount} 回復した。`)
+
+    if (this.state.player.poisoned) {
+      this.state.player.poisoned = false
+      this.log("どくが きえた。")
+    }
 
     if (this.state.mode === "battle") {
       this.enemyTurn()
@@ -568,16 +953,74 @@ class DragonQuestGame {
     this.saveAndRender()
   }
 
+  defend() {
+    if (this.state.mode !== "battle" || !this.state.enemy) {
+      this.log("今はぼうぎょする場面ではない。")
+      this.saveAndRender()
+      return
+    }
+
+    this.state.player.guarding = true
+    this.log("ぼうぎょの かまえを とった。")
+    this.enemyTurn()
+    this.saveAndRender()
+  }
+
+  pickEnemyAction() {
+    const actions = this.state.enemy?.actions || []
+
+    for (const action of actions) {
+      if (Math.random() < action.chance) {
+        return action
+      }
+    }
+
+    return null
+  }
+
+  resolveEnemyAction(action) {
+    const damage = randomInt(action.min, action.max)
+
+    switch (action.type) {
+      case "spell":
+      case "flame":
+        this.applyPlayerDamage(damage, action.message, { ignoresGuard: Boolean(action.ignoresGuard) })
+        break
+      case "heavy":
+        this.applyPlayerDamage(damage, action.message)
+        break
+      case "poison":
+        this.applyPlayerDamage(damage, action.message, { inflictPoison: true })
+        break
+      case "drain":
+        this.applyPlayerDamage(damage, action.message)
+        if (this.state.mode === "battle" && this.state.enemy) {
+          const recovered = Math.max(1, Math.floor(damage / 2))
+          this.state.enemy.hp = clamp(this.state.enemy.hp + recovered, 0, this.state.enemy.maxHp)
+          this.log(`${this.state.enemy.name}の傷が すこし ふさがった。`)
+        }
+        break
+      default:
+        this.applyPlayerDamage(damage, `${this.state.enemy.name}の攻撃。`)
+        break
+    }
+  }
+
   enemyTurn() {
     if (this.state.mode !== "battle" || !this.state.enemy) return
 
-    const enemyDamage = Math.max(1, this.state.enemy.attack + randomInt(0, 2) - Math.floor(this.playerDefense() / 2))
-    this.state.player.hp = Math.max(0, this.state.player.hp - enemyDamage)
-    this.log(`${this.state.enemy.name}の攻撃。${enemyDamage} ダメージを受けた。`)
+    const action = this.pickEnemyAction()
 
-    if (this.state.player.hp <= 0) {
-      this.respawnAtCastle(`${this.state.enemy.name}に敗れた。王のもとで再び目を覚ます。`)
+    if (action) {
+      this.resolveEnemyAction(action)
+    } else if (this.state.enemy.missChance && Math.random() < this.state.enemy.missChance) {
+      this.log(`${this.state.enemy.name}の攻撃は はずれた。`)
+    } else {
+      const enemyDamage = this.enemyPhysicalDamage(this.state.enemy.attack)
+      this.applyPlayerDamage(enemyDamage, `${this.state.enemy.name}の攻撃。`)
     }
+
+    this.state.player.guarding = false
   }
 
   respawnAtCastle(message) {
@@ -589,6 +1032,7 @@ class DragonQuestGame {
     this.state.player.y = START_POSITION.y
     this.state.mode = "explore"
     this.state.enemy = null
+    this.cureAilments()
     this.log(message)
     this.log("持ち金は半分になったが、冒険は続く。")
   }
@@ -622,6 +1066,7 @@ class DragonQuestGame {
 
   checkLevelUp() {
     let leveled = false
+    const previousLevel = this.state.player.level
 
     while (this.state.player.level < LEVEL_TABLE.length) {
       const nextLevel = LEVEL_TABLE[this.state.player.level]
@@ -637,6 +1082,10 @@ class DragonQuestGame {
     this.state.player.hp = profile.maxHp
     this.state.player.mp = profile.maxMp
     this.log(`レベル${this.state.player.level}になった。力がみなぎる。`)
+
+    Object.values(SPELLS)
+      .filter((spell) => spell.unlockLevel > previousLevel && spell.unlockLevel <= this.state.player.level)
+      .forEach((spell) => this.log(`${spell.name}を おぼえた。`))
   }
 
   handleTownAction(action) {
@@ -728,19 +1177,73 @@ class DragonQuestGame {
     }
   }
 
+  seamValue(x, y, neighborX, neighborY) {
+    const tile = tileInfoAt(x, y)
+    const neighbor = tileInfoAt(neighborX, neighborY)
+
+    if (!tile || !neighbor) return 0
+    return tile.terrain === neighbor.terrain ? 0 : 1
+  }
+
+  tileVisualStyle(x, y, terrain) {
+    const tuning = TERRAIN_PHOTO_TUNING[terrain]
+    const offsetX = (seededUnit(x, y, 1) - 0.5) * tuning.spreadX
+    const offsetY = (seededUnit(x, y, 2) - 0.5) * tuning.spreadY
+    const scale = tuning.scale + (seededUnit(x, y, 3) - 0.5) * 0.08
+    const brightness = tuning.brightness + (seededUnit(x, y, 4) - 0.5) * 0.06
+    const contrast = tuning.contrast + (seededUnit(x, y, 5) - 0.5) * 0.05
+    const saturate = tuning.saturate + (seededUnit(x, y, 6) - 0.5) * 0.06
+    const lightX = 26 + seededUnit(x, y, 7) * 48
+    const lightY = 18 + seededUnit(x, y, 8) * 40
+    const haze = 0.06 + seededUnit(x, y, 9) * 0.06
+
+    return [
+      `--photo-x:${(tuning.x + offsetX).toFixed(2)}%`,
+      `--photo-y:${(tuning.y + offsetY).toFixed(2)}%`,
+      `--photo-scale:${scale.toFixed(3)}`,
+      `--photo-brightness:${brightness.toFixed(3)}`,
+      `--photo-contrast:${contrast.toFixed(3)}`,
+      `--photo-saturate:${saturate.toFixed(3)}`,
+      `--light-x:${lightX.toFixed(2)}%`,
+      `--light-y:${lightY.toFixed(2)}%`,
+      `--tile-haze:${haze.toFixed(3)}`
+    ]
+  }
+
   renderMap() {
-    const rows = WORLD_MAP.map((row, y) =>
+    const mapWidth = WORLD_MAP[0].length
+    const mapHeight = WORLD_MAP.length
+    const halfViewport = Math.floor(VIEWPORT_SIZE / 2)
+    const startX = clamp(this.state.player.x - halfViewport, 0, mapWidth - VIEWPORT_SIZE)
+    const startY = clamp(this.state.player.y - halfViewport, 0, mapHeight - VIEWPORT_SIZE)
+    const visibleRows = WORLD_MAP.slice(startY, startY + VIEWPORT_SIZE)
+
+    this.mapElement.style.setProperty("--map-columns", String(VIEWPORT_SIZE))
+
+    const rows = visibleRows.map((row, rowIndex) =>
       row
+        .slice(startX, startX + VIEWPORT_SIZE)
         .split("")
-        .map((tileCode, x) => {
+        .map((tileCode, columnIndex) => {
+          const worldX = startX + columnIndex
+          const worldY = startY + rowIndex
           const tile = TILE_INFO[tileCode]
-          const current = x === this.state.player.x && y === this.state.player.y
+          const current = worldX === this.state.player.x && worldY === this.state.player.y
           const classes = ["map-tile", `terrain-${tile.terrain}`]
           if (current) classes.push("is-player")
+          const styleVars = [
+            `--seam-top:${this.seamValue(worldX, worldY, worldX, worldY - 1)}`,
+            `--seam-right:${this.seamValue(worldX, worldY, worldX + 1, worldY)}`,
+            `--seam-bottom:${this.seamValue(worldX, worldY, worldX, worldY + 1)}`,
+            `--seam-left:${this.seamValue(worldX, worldY, worldX - 1, worldY)}`,
+            ...this.tileVisualStyle(worldX, worldY, tile.terrain)
+          ].join(";")
 
-          const content = current ? "勇" : tile.symbol
-
-          return `<div class="${classes.join(" ")}" title="${tile.name}">${content}</div>`
+          return `
+            <div class="${classes.join(" ")}" style="${styleVars}" title="${tile.name}" aria-label="${current ? `勇者がいる ${tile.name}` : tile.name}">
+              ${current ? '<span class="player-marker" aria-hidden="true"></span>' : ""}
+            </div>
+          `
         })
         .join("")
     ).join("")
@@ -752,6 +1255,7 @@ class DragonQuestGame {
     const profile = this.playerProfile()
     const weapon = WEAPON_LOOKUP[this.state.player.weapon]
     const armor = ARMOR_LOOKUP[this.state.player.armor]
+    const spells = this.knownSpells()
 
     this.statsElement.innerHTML = `
       <dl class="stats-grid">
@@ -768,6 +1272,8 @@ class DragonQuestGame {
         <p>武器: ${weapon.name}</p>
         <p>防具: ${armor.name}</p>
         <p>太陽の紋章: ${this.state.player.hasSigil ? "入手済み" : "未入手"}</p>
+        <p>状態: ${this.state.player.poisoned ? "どく" : "正常"}</p>
+        <p>呪文: ${spells.length > 0 ? spells.map((spell) => spell.name).join(" / ") : "なし"}</p>
       </div>
     `
   }
@@ -822,11 +1328,27 @@ class DragonQuestGame {
         <p class="enemy-description">HP ${this.state.enemy.hp} / ${this.state.enemy.maxHp}</p>
         <p class="enemy-description">攻撃 ${this.state.enemy.attack} / 守備 ${this.state.enemy.defense}</p>
         <p class="enemy-description">${this.state.enemy.boss ? "ボス戦: にげるは使えない" : "通常戦闘"}</p>
+        <p class="enemy-description">${this.state.player.poisoned ? "こちらは どく状態" : "状態異常なし"}</p>
       </div>
     `
   }
 
   renderContext() {
+    if (this.state.mode === "battle") {
+      const attackSpell = this.currentAttackSpell()
+      const healSpell = this.currentHealSpell()
+
+      this.contextElement.innerHTML = `
+        <div class="battle-context">
+          <p class="panel-label">BATTLE GUIDE</p>
+          <p class="context-copy">こうげき呪文: ${attackSpell ? `${attackSpell.name} (${attackSpell.mpCost}MP)` : "未習得"}</p>
+          <p class="context-copy">回復呪文: ${healSpell ? `${healSpell.name} (${healSpell.mpCost}MP)` : "未習得"}</p>
+          <p class="context-copy">ぼうぎょは 次の いちげきを 半減する。やくそうは どくも なおせる。</p>
+        </div>
+      `
+      return
+    }
+
     if (this.currentTileCode() !== "T" || this.state.mode === "battle") {
       this.contextElement.innerHTML = `
         <p class="context-copy">町に入ると宿屋と装備屋が使える。城では無料回復、平地では「しらべる」で小さな発見がある。</p>
@@ -857,19 +1379,26 @@ class DragonQuestGame {
 
   renderButtons() {
     this.actionButton.textContent = this.actionLabel()
+    const attackSpell = this.currentAttackSpell()
+    const healSpell = this.currentHealSpell()
 
     this.root.querySelectorAll("button[data-command='move']").forEach((button) => {
       button.disabled = this.state.mode === "battle" || this.state.mode === "victory"
     })
 
     this.root.querySelector("button[data-command='attack']").disabled = this.state.mode !== "battle"
+    this.root.querySelector("button[data-command='defend']").disabled = this.state.mode !== "battle"
     this.root.querySelector("button[data-command='run']").disabled = this.state.mode !== "battle"
+    this.attackSpellButton.textContent = attackSpell ? attackSpell.name : "じゅもん"
+    this.healSpellButton.textContent = healSpell ? healSpell.name : "かいふく"
+    this.attackSpellButton.disabled = this.state.mode !== "battle" || !attackSpell || this.state.player.mp < attackSpell.mpCost
+    this.healSpellButton.disabled = !healSpell || this.state.player.mp < healSpell.mpCost
   }
 
   renderHeader() {
     const tile = this.currentTile()
     const battleText = this.state.enemy ? ` / ${this.state.enemy.name}と戦闘中` : ""
-    this.locationElement.textContent = `${tile.name}${battleText}`
+    this.locationElement.textContent = `${tile.name}${battleText} / 座標 ${this.state.player.x + 1},${this.state.player.y + 1}`
     this.modeElement.textContent = this.state.mode === "battle" ? "BATTLE" : this.state.mode === "victory" ? "CLEAR" : "EXPLORE"
   }
 

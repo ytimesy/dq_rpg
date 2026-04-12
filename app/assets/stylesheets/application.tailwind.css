@@ -1,15 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg-night: #11111a;
-  --bg-panel: rgba(12, 20, 38, 0.82);
-  --bg-panel-strong: rgba(7, 12, 24, 0.92);
-  --line-bright: rgba(135, 175, 255, 0.35);
-  --text-main: #ecf4ff;
-  --text-dim: #a7bdd8;
-  --accent-gold: #f7c96f;
-  --accent-red: #ff857a;
-  --accent-green: #97e7a7;
+  --dq-blue: #173fd7;
+  --dq-blue-dark: #0b2aa5;
+  --dq-black: #050505;
+  --dq-white: #f8f8f8;
+  --dq-text: #f6f8ff;
+  --dq-text-dim: #d8e1ff;
+  --dq-shadow: rgba(2, 8, 28, 0.56);
 }
 
 * {
@@ -19,12 +17,12 @@
 body {
   margin: 0;
   min-height: 100vh;
-  color: var(--text-main);
+  color: var(--dq-text);
   background:
-    radial-gradient(circle at top left, rgba(59, 103, 196, 0.28), transparent 32%),
-    radial-gradient(circle at top right, rgba(255, 173, 94, 0.16), transparent 24%),
-    linear-gradient(180deg, #1a2034 0%, #0f1220 48%, #0a0d18 100%);
-  font-family: "Courier New", "Hiragino Mincho ProN", "Yu Mincho", monospace;
+    radial-gradient(circle at top left, rgba(129, 174, 255, 0.12), transparent 24%),
+    linear-gradient(180deg, var(--dq-blue) 0%, var(--dq-blue-dark) 100%);
+  font-family: "MS Gothic", "Osaka-Mono", "Courier New", monospace;
+  letter-spacing: 0.02em;
 }
 
 button,
@@ -35,60 +33,61 @@ select {
 }
 
 .quest-shell {
-  width: min(1200px, calc(100% - 2rem));
+  width: min(1160px, calc(100% - 1.25rem));
   margin: 0 auto;
-  padding: 2rem 0 3rem;
+  padding: 1rem 0 2rem;
 }
 
 .quest-hero {
-  margin-bottom: 1.5rem;
-  padding: 1.5rem;
-  border: 1px solid rgba(245, 204, 115, 0.22);
-  border-radius: 28px;
-  background:
-    linear-gradient(135deg, rgba(247, 201, 111, 0.1), rgba(92, 132, 220, 0.08)),
-    rgba(8, 13, 27, 0.78);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0.85rem;
+  padding: 1rem 1.1rem;
+  border: 4px solid var(--dq-white);
+  border-radius: 0;
+  background: var(--dq-black);
+  box-shadow:
+    0 0 0 4px var(--dq-blue),
+    0 10px 0 var(--dq-shadow);
 }
 
 .quest-kicker,
 .panel-label,
 .save-chip,
 .mode-chip {
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.72rem;
 }
 
 .quest-hero h1 {
-  margin: 0.35rem 0 0.6rem;
-  font-size: clamp(2.3rem, 4vw, 4rem);
-  line-height: 1.02;
+  margin: 0.45rem 0 0.55rem;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1.15;
 }
 
 .quest-lead {
   margin: 0;
-  max-width: 48rem;
-  color: var(--text-dim);
-  font-size: 1rem;
-  line-height: 1.7;
+  max-width: 52rem;
+  color: var(--dq-text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .quest-grid {
   display: grid;
   grid-template-columns: 1.25fr 0.8fr;
-  gap: 1rem;
+  gap: 0.65rem;
   align-items: start;
 }
 
 .quest-panel {
-  border: 1px solid var(--line-bright);
-  border-radius: 24px;
-  background: linear-gradient(180deg, var(--bg-panel), var(--bg-panel-strong));
-  backdrop-filter: blur(12px);
-  padding: 1.2rem;
-  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22);
-  animation: panel-rise 420ms ease both;
+  border: 4px solid var(--dq-white);
+  border-radius: 0;
+  background: var(--dq-black);
+  padding: 0.95rem;
+  box-shadow:
+    0 0 0 4px var(--dq-blue),
+    0 10px 0 var(--dq-shadow);
+  animation: panel-rise 260ms ease both;
 }
 
 .world-panel,
@@ -107,12 +106,12 @@ select {
   align-items: start;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.65rem;
 }
 
 .panel-heading h2 {
   margin: 0.15rem 0 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .panel-label,
@@ -123,15 +122,16 @@ select {
 .enemy-description,
 .equipment-block,
 .objective-block p {
-  color: var(--text-dim);
+  color: var(--dq-text-dim);
 }
 
 .mode-chip,
 .save-chip {
-  border-radius: 999px;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
+  padding: 0.22rem 0.45rem;
+  border: 2px solid var(--dq-white);
+  background: transparent;
+  color: var(--dq-white);
 }
 
 .location-line {
@@ -139,42 +139,135 @@ select {
   min-height: 1.25rem;
 }
 
+.credits-note {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+}
+
+.credits-note a {
+  color: var(--dq-text-dim);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .world-map {
   display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
-  gap: 0.36rem;
+  grid-template-columns: repeat(var(--map-columns, 10), minmax(0, 1fr));
+  position: relative;
+  gap: 0;
+  padding: 0;
+  border-radius: 18px;
+  border: 4px solid var(--dq-white);
+  overflow: hidden;
+  isolation: isolate;
+  background: #1a2434;
+  transform: translateZ(0);
+}
+
+.world-map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(20, 32, 60, 0.08), rgba(5, 8, 18, 0.18)),
+    radial-gradient(circle at center, transparent 58%, rgba(5, 8, 18, 0.12) 100%);
 }
 
 .map-tile {
   display: grid;
   place-items: center;
+  position: relative;
+  z-index: 1;
   aspect-ratio: 1;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  font-size: clamp(0.8rem, 2vw, 1.1rem);
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
-  transition: transform 160ms ease, border-color 160ms ease;
+  overflow: hidden;
+  border-radius: 0;
+  border: 0;
+  margin: -1px;
+  background: transparent;
 }
 
-.map-tile:hover {
-  transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.2);
+.map-tile::before {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  background-position: var(--photo-x, 50%) var(--photo-y, 50%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(var(--photo-scale, 1.08));
+  filter:
+    saturate(var(--photo-saturate, 0.82))
+    contrast(var(--photo-contrast, 0.9))
+    brightness(var(--photo-brightness, 0.88))
+    sepia(0.06);
 }
 
-.terrain-plain { background: linear-gradient(180deg, #49613c, #334728); }
-.terrain-forest { background: linear-gradient(180deg, #325640, #193127); }
-.terrain-swamp { background: linear-gradient(180deg, #52604f, #374339); }
-.terrain-castle { background: linear-gradient(180deg, #506eb7, #33498b); }
-.terrain-town { background: linear-gradient(180deg, #8a5f3c, #5b3b22); }
-.terrain-cave { background: linear-gradient(180deg, #5e5a7a, #343147); }
-.terrain-dragon { background: linear-gradient(180deg, #9b4540, #5d221f); }
-.terrain-mountain { background: linear-gradient(180deg, #536071, #2f3947); opacity: 0.78; }
+.map-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at var(--light-x, 50%) var(--light-y, 40%), rgba(255, 244, 224, var(--tile-haze, 0.08)), transparent 42%),
+    linear-gradient(180deg, rgba(14, 22, 40, 0.02), rgba(6, 9, 18, 0.12));
+}
+
+.terrain-plain::before {
+  background-image: url("/tiles/photos/plain-meadow.jpg");
+}
+
+.terrain-forest::before {
+  background-image: url("/tiles/photos/forest-woods.jpg");
+}
+
+.terrain-swamp::before {
+  background-image: url("/tiles/photos/swamp-landscape.jpg");
+  background-position: center center;
+}
+
+.terrain-castle::before {
+  background-image: url("/tiles/photos/castle-medieval.jpg");
+  background-position: center center;
+}
+
+.terrain-town::before {
+  background-image: url("/tiles/photos/town-street.jpg");
+}
+
+.terrain-cave::before {
+  background-image: url("/tiles/photos/cave-entrance.jpg");
+}
+
+.terrain-dragon::before {
+  background-image: url("/tiles/photos/dragon-castle-dusk.jpg");
+  background-position: center center;
+}
+
+.terrain-dragon::after {
+  background:
+    linear-gradient(180deg, rgba(45, 5, 8, 0.2), rgba(45, 5, 8, 0.48)),
+    linear-gradient(135deg, rgba(185, 58, 58, 0.24), rgba(0, 0, 0, 0));
+}
+
+.terrain-mountain::before {
+  background-image: url("/tiles/photos/mountain-landscape.jpg");
+}
 
 .map-tile.is-player {
-  color: #0f1421;
-  background: linear-gradient(180deg, #f7d47b, #d8a949);
-  border-color: rgba(255, 232, 176, 0.7);
-  box-shadow: 0 0 0 2px rgba(255, 215, 120, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 232, 176, 0.38);
+}
+
+.player-marker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 42%;
+  height: 74%;
+  transform: translate(-50%, -50%);
+  background: url("/tiles/photos/hero-samurai.jpg") center 18% / cover no-repeat;
+  box-shadow: 0 0 0 1px rgba(255, 244, 196, 0.22);
+  filter: saturate(0.88) contrast(0.92) brightness(0.96) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.32));
 }
 
 .panel-footnote {
@@ -190,31 +283,32 @@ select {
 }
 
 .stats-grid div {
-  padding: 0.75rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
+  padding: 0.62rem;
+  border: 2px solid var(--dq-white);
+  border-radius: 0;
+  background: transparent;
 }
 
 .stats-grid dt {
   margin-bottom: 0.3rem;
-  color: var(--text-dim);
+  color: var(--dq-text-dim);
   font-size: 0.78rem;
 }
 
 .stats-grid dd {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 
 .equipment-block,
 .objective-block {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 2px solid var(--dq-white);
 }
 
 .objective-done {
-  color: var(--accent-green);
+  color: #b7ffbf;
 }
 
 .move-pad {
@@ -231,7 +325,7 @@ select {
 }
 
 .battle-actions {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 0.9rem;
 }
 
@@ -242,21 +336,19 @@ select {
 .command-button,
 .shop-button {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 0.85rem 0.9rem;
-  color: var(--text-main);
-  background:
-    linear-gradient(180deg, rgba(91, 123, 204, 0.16), rgba(255, 255, 255, 0.03)),
-    rgba(6, 10, 18, 0.8);
+  border: 2px solid var(--dq-white);
+  border-radius: 0;
+  padding: 0.72rem 0.8rem;
+  color: var(--dq-white);
+  background: transparent;
   cursor: pointer;
-  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+  transition: background 120ms ease, color 120ms ease;
 }
 
 .command-button:hover:not(:disabled),
 .shop-button:hover {
-  transform: translateY(-1px);
-  border-color: rgba(247, 201, 111, 0.5);
+  background: var(--dq-white);
+  color: var(--dq-black);
 }
 
 .command-button:disabled {
@@ -269,36 +361,41 @@ select {
 }
 
 .reset-button {
-  background: linear-gradient(180deg, rgba(164, 76, 68, 0.28), rgba(255, 255, 255, 0.02));
+  border-color: #ffd0d0;
+  color: #ffd0d0;
 }
 
 .context-panel {
   margin-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 2px solid var(--dq-white);
   padding-top: 1rem;
+}
+
+.battle-context {
+  display: grid;
+  gap: 0.45rem;
 }
 
 .enemy-card {
   min-height: 11rem;
-  border-radius: 20px;
+  border-radius: 0;
   padding: 1rem;
-  background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 40%),
-    rgba(255, 255, 255, 0.04);
+  border: 2px solid var(--dq-white);
+  background: transparent;
 }
 
 .enemy-name {
   margin: 0 0 0.8rem;
-  font-size: 1.5rem;
-  color: var(--accent-gold);
+  font-size: 1.25rem;
+  color: var(--dq-white);
 }
 
 .boss-card {
-  box-shadow: inset 0 0 0 1px rgba(255, 133, 122, 0.28);
+  box-shadow: inset 0 0 0 2px rgba(255, 186, 186, 0.45);
 }
 
 .victory-card .enemy-name {
-  color: var(--accent-green);
+  color: #b7ffbf;
 }
 
 .log-list {
@@ -309,7 +406,7 @@ select {
 }
 
 .log-list li::marker {
-  color: var(--accent-gold);
+  color: var(--dq-white);
 }
 
 @keyframes panel-rise {
@@ -352,5 +449,9 @@ select {
 
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .battle-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

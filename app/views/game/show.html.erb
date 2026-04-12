@@ -2,7 +2,7 @@
 
 <div class="quest-shell">
   <header class="quest-hero">
-    <p class="quest-kicker">SINGLE SCREEN JRPG</p>
+    <p class="quest-kicker">DRAGON QUEST I STYLE</p>
     <h1>ドラゴンクエストI風ミニRPG</h1>
     <p class="quest-lead">
       町で装備を整え、洞窟の守り手を倒し、竜王を討ってアレフガルドに平和を取り戻してください。
@@ -20,14 +20,15 @@
       </div>
       <div class="location-line" id="dq-location"></div>
       <div class="world-map" id="dq-map" aria-live="polite"></div>
-      <p class="panel-footnote">移動: 方向キー / WASD</p>
+      <p class="panel-footnote">移動: 方向キー / WASD 長押し</p>
+      <p class="credits-note"><a href="/photo-credits.html" target="_blank" rel="noreferrer">写真出典</a></p>
     </section>
 
     <section class="quest-panel stats-panel" aria-labelledby="stats-panel-title">
       <div class="panel-heading">
         <div>
           <p class="panel-label">STATUS</p>
-          <h2 id="stats-panel-title">冒険者</h2>
+          <h2 id="stats-panel-title">ステータス</h2>
         </div>
         <div class="save-chip">自動保存</div>
       </div>
@@ -42,7 +43,7 @@
       <div class="panel-heading">
         <div>
           <p class="panel-label">COMMAND</p>
-          <h2 id="controls-panel-title">コマンド</h2>
+          <h2 id="controls-panel-title">こうどう</h2>
         </div>
       </div>
 
@@ -60,7 +61,9 @@
 
       <div class="battle-actions">
         <button class="command-button" data-command="attack" type="button">たたかう</button>
-        <button class="command-button" data-command="spell" type="button">ホイミ</button>
+        <button class="command-button" data-command="attack_spell" type="button" id="dq-attack-spell-button">ギラ</button>
+        <button class="command-button" data-command="heal_spell" type="button" id="dq-heal-spell-button">ホイミ</button>
+        <button class="command-button" data-command="defend" type="button">ぼうぎょ</button>
         <button class="command-button" data-command="herb" type="button">やくそう</button>
         <button class="command-button" data-command="run" type="button">にげる</button>
       </div>
@@ -76,7 +79,7 @@
       <div class="panel-heading">
         <div>
           <p class="panel-label">ENCOUNTER</p>
-          <h2 id="battle-panel-title">戦況</h2>
+          <h2 id="battle-panel-title">たたかい</h2>
         </div>
       </div>
       <div id="dq-enemy"></div>
@@ -86,7 +89,7 @@
       <div class="panel-heading">
         <div>
           <p class="panel-label">BATTLE LOG</p>
-          <h2 id="log-panel-title">冒険の記録</h2>
+          <h2 id="log-panel-title">ぼうけんのきろく</h2>
         </div>
       </div>
       <ol id="dq-log" class="log-list"></ol>
