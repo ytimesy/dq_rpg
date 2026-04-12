@@ -1,6 +1,7 @@
 # DQ RPG
 
 Rails 7 + esbuild + Tailwind で作った、ドラゴンクエストI風のシングルページRPGです。
+ゲームの進行データはブラウザの `localStorage` に保存しており、データベースは使いません。
 
 ## 起動
 
